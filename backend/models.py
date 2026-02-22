@@ -20,7 +20,7 @@ class Location(Base):
     id = Column(Integer, primary_key=True, index=True)
     city_id = Column(Integer, ForeignKey("cities.id"), nullable=False)
     name = Column(String, nullable=False)
-    type = Column(String, nullable=False)  # home, airport, railway_station, bus_terminal, metro_station
+    type = Column(String, nullable=False) 
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
     city = relationship("City")
@@ -54,7 +54,7 @@ class RouteOption(Base):
     id = Column(Integer, primary_key=True, index=True)
     route_id = Column(Integer, ForeignKey("routes.id"), nullable=False)
     mode_id = Column(Integer, ForeignKey("transport_modes.id"), nullable=False)
-    option_type = Column(String, nullable=False)  # fastest, cheapest, reliable
+    option_type = Column(String, nullable=False)  
     base_travel_time = Column(Float, nullable=False)
     cost = Column(Float, nullable=False)
     variance_minutes = Column(Float, nullable=False)

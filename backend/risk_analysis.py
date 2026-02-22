@@ -47,7 +47,7 @@ class RiskAnalyzer:
             f"(±{vuln.variance_minutes:.0f} min, {overflow_rate:.0f}% overflow)"
         )
 
-        # Tightest buffer
+        
         tight_idx = sim.tightest_buffer_idx
         if tight_idx < n - 1:
             tl = legs[tight_idx]
@@ -63,7 +63,7 @@ class RiskAnalyzer:
             f" ({'high sensitivity' if sim.sensitivity_10min > 8 else 'moderate' if sim.sensitivity_10min > 4 else 'low'})"
         )
 
-        # Main risk factor
+        
         max_of = sim.leg_overflow_rates.index(max(sim.leg_overflow_rates))
         if sim.leg_overflow_rates[max_of] > 25:
             main_risk = f"{legs[max_of].mode} buffer overflow in {sim.leg_overflow_rates[max_of]:.0f}% of simulations cascades downstream"
@@ -74,7 +74,7 @@ class RiskAnalyzer:
         else:
             main_risk = f"Well-buffered route; {sim.probability_of_success:.0f}% probability of on-time arrival"
 
-        # Narrative
+       
         if risk_level == "Low":
             narrative = (f"The {option_name} option is reliable. With {sim.probability_of_success:.0f}% "
                         f"on-time probability, buffers adequately absorb typical delays. "
@@ -88,9 +88,9 @@ class RiskAnalyzer:
                         f"More than 1 in 3 miss the deadline due to delay propagation. "
                         f"{MODE_NOTES.get(vuln.mode, '')}")
 
-        # Recommendation score: 60% reliability, 25% speed, 15% cost
-        speed_score = max(0, 100 - (total_time_min / 1800) * 100)  # 30 hr = worst case
-        cost_score = max(0, 100 - (total_cost / 8000) * 100)       # 8000 INR = worst case
+
+        speed_score = max(0, 100 - (total_time_min / 1800) * 100)  
+        cost_score = max(0, 100 - (total_cost / 8000) * 100)      
         rec_score = sim.probability_of_success * 0.6 + speed_score * 0.25 + cost_score * 0.15
 
         return RiskReport(

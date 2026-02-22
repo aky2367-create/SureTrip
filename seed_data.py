@@ -11,7 +11,6 @@ Cities: Delhi, Lucknow, Chandigarh, Jaipur, Pune
 Routes: All 10 bidirectional combinations (5C2 = 10)
 """
 
-# ─── CITIES ───────────────────────────────────────────────────────────────────
 CITIES = {
     "delhi": {
         "name": "Delhi",
@@ -80,7 +79,7 @@ CITIES = {
     },
 }
 
-# ─── TRANSPORT MODE BASE PARAMETERS ───────────────────────────────────────────
+
 TRANSPORT_MODES = {
     "metro": {
         "name": "Metro",
@@ -88,8 +87,8 @@ TRANSPORT_MODES = {
         "color": "#3b82f6",
         "avg_speed_kmph": 35,
         "base_cost_per_km": 2.5,
-        "variance_factor": 0.18,   # variance = base_time * factor
-        "fixed_variance": 7,        # minimum variance in minutes
+        "variance_factor": 0.18,   
+        "fixed_variance": 7,        
         "notes": "Signal-controlled; very consistent"
     },
     "cab": {
@@ -174,16 +173,10 @@ TRANSPORT_MODES = {
     },
 }
 
-# ─── ROUTE DATABASE ────────────────────────────────────────────────────────────
-# Based on: NH distances, IRails timetables, flight durations
-# All times in minutes. Costs in INR.
-# buffer = (variance × 0.6) + fixed_transfer_time
+
 
 ROUTES = {
 
-    # ─── DELHI ↔ LUCKNOW ─────────────────────────────────────
-    # Distance: ~556 km by road / ~500 km rail
-    # Shatabdi: ~6.5 hrs, Tejas: ~6 hrs, Flight: 1hr, Bus: 8-9 hrs
     ("delhi", "lucknow"): {
         "distance_km": 556,
         "fastest": {
@@ -215,9 +208,7 @@ ROUTES = {
         }
     },
 
-    # ─── DELHI ↔ CHANDIGARH ──────────────────────────────────
-    # Distance: ~250 km by road / 245 km rail
-    # Shatabdi: 3.5 hrs, Volvo bus: 4-5 hrs, Flight: 45min air + transfers
+    
     ("delhi", "chandigarh"): {
         "distance_km": 250,
         "fastest": {
@@ -249,9 +240,7 @@ ROUTES = {
         }
     },
 
-    # ─── DELHI ↔ JAIPUR ──────────────────────────────────────
-    # Distance: ~270 km by road / 303 km rail
-    # Shatabdi: 4.5 hrs, Road: 4-5 hrs via NH-48, Flight: ~45min air
+    
     ("delhi", "jaipur"): {
         "distance_km": 270,
         "fastest": {
@@ -282,9 +271,7 @@ ROUTES = {
         }
     },
 
-    # ─── DELHI ↔ PUNE ────────────────────────────────────────
-    # Distance: ~1,408 km by road / 1,551 km rail
-    # Flight: 2hr air, Train: ~22-26 hrs (Rajdhani: 24hr), Road: not practical
+    
     ("delhi", "pune"): {
         "distance_km": 1408,
         "fastest": {
@@ -316,9 +303,7 @@ ROUTES = {
         }
     },
 
-    # ─── LUCKNOW ↔ CHANDIGARH ────────────────────────────────
-    # Distance: ~600 km by road / ~700 km rail (via Delhi)
-    # Train: ~12 hrs (Chandigarh Express), Road: ~10 hrs, Flight: no direct (via Delhi)
+    
     ("lucknow", "chandigarh"): {
         "distance_km": 600,
         "fastest": {
@@ -351,9 +336,7 @@ ROUTES = {
         }
     },
 
-    # ─── LUCKNOW ↔ JAIPUR ────────────────────────────────────
-    # Distance: ~630 km by road / ~640 km rail
-    # Train: ~10-12 hrs, Road: ~10 hrs, Flight: ~1hr air (via Delhi usually)
+    
     ("lucknow", "jaipur"): {
         "distance_km": 630,
         "fastest": {
@@ -385,9 +368,7 @@ ROUTES = {
         }
     },
 
-    # ─── LUCKNOW ↔ PUNE ──────────────────────────────────────
-    # Distance: ~1,400 km by road / ~1,500 km rail
-    # Train: ~22-25 hrs, Flight: ~2hr air (IndiGo, Air India direct)
+   
     ("lucknow", "pune"): {
         "distance_km": 1400,
         "fastest": {
@@ -419,9 +400,7 @@ ROUTES = {
         }
     },
 
-    # ─── CHANDIGARH ↔ JAIPUR ─────────────────────────────────
-    # Distance: ~540 km by road / ~780 km rail (via Delhi)
-    # Road: ~8 hrs via NH-48/NH-48, Train: ~12-14 hrs, Flight: 1hr + transfers via Delhi
+    
     ("chandigarh", "jaipur"): {
         "distance_km": 540,
         "fastest": {
@@ -453,9 +432,7 @@ ROUTES = {
         }
     },
 
-    # ─── CHANDIGARH ↔ PUNE ───────────────────────────────────
-    # Distance: ~1,650 km by road / ~2,000 km rail (no direct train)
-    # Flight: 2.5hr via Delhi typically, Train: 30+ hrs via Delhi/Mumbai
+    
     ("chandigarh", "pune"): {
         "distance_km": 1650,
         "fastest": {
@@ -487,9 +464,7 @@ ROUTES = {
         }
     },
 
-    # ─── JAIPUR ↔ PUNE ───────────────────────────────────────
-    # Distance: ~1,150 km by road / ~1,350 km rail
-    # Flight: ~1.5hr direct (IndiGo), Train: ~16-20 hrs, Road: not practical
+    
     ("jaipur", "pune"): {
         "distance_km": 1150,
         "fastest": {
@@ -529,7 +504,7 @@ def get_route(src: str, dst: str) -> dict:
     if key in ROUTES:
         return ROUTES[key]
     if rev in ROUTES:
-        # Reverse all legs
+        
         route = ROUTES[rev]
         reversed_route = {"distance_km": route["distance_km"]}
         for opt_key in ["fastest", "cheapest", "reliable"]:

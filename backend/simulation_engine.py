@@ -1,20 +1,3 @@
-"""
-SureTrip v3 — Delay Propagation Simulation Engine
-==================================================
-Upgraded for multi-city routing with route-specific variance.
-
-Core model:
-  Leg₁ → Buffer₁ → Leg₂ → Buffer₂ → Leg₃ → Arrival
-
-Delay propagation:
-  overflow_i = max(0, delay_i + overflow_{i-1} - buffer_i)
-  carried into next leg.
-
-v3 upgrades:
-  - Route-specific variance (proportional to route duration)
-  - Per-route simulation parameters
-  - Separate short/medium/long route variance buckets
-"""
 
 import numpy as np
 from dataclasses import dataclass
@@ -28,10 +11,10 @@ class LegConfig:
     mode: str
     from_location: str
     to_location: str
-    base_travel_time: float   # minutes
-    variance_minutes: float   # std deviation
-    buffer_after: float       # buffer minutes after this leg
-    cost: float               # INR
+    base_travel_time: float   
+    variance_minutes: float  
+    buffer_after: float       
+    cost: float              
     lat_from: float = 0.0
     lon_from: float = 0.0
     lat_to: float = 0.0
@@ -43,8 +26,8 @@ class SimulationResult:
     probability_of_success: float
     probability_of_failure: float
     average_arrival_min: float
-    worst_case_arrival_min: float    # 95th percentile
-    best_case_arrival_min: float     # 5th percentile
+    worst_case_arrival_min: float    
+    best_case_arrival_min: float     
     std_arrival_min: float
     leg_delay_means: List[float]
     leg_overflow_rates: List[float]
@@ -96,7 +79,7 @@ class DelayPropagationSimulator:
         leg_delays_rec = np.zeros((self.n, n_legs))
         buffer_overflows = np.zeros((self.n, n_legs))
 
-        # Total base journey (all legs + all buffers except last)
+        
         total_base = sum(l.base_travel_time + l.buffer_after for l in legs) - legs[-1].buffer_after
 
         for sim in range(self.n):
@@ -106,14 +89,14 @@ class DelayPropagationSimulator:
                 leg_delay = max(0.0, leg_raw)
                 leg_delays_rec[sim, i] = leg_delay + carried
 
-                # Buffer absorption
+        
                 overflow = max(0.0, carried + leg_delay - leg.buffer_after)
                 buffer_overflows[sim, i] = 1.0 if overflow > 0 else 0.0
                 carried = overflow
 
             arrival_times[sim] = total_base + carried
 
-        # Statistics
+        
         successes = np.sum(arrival_times <= deadline_min)
         prob_success = float(successes / self.n * 100)
 
@@ -126,7 +109,7 @@ class DelayPropagationSimulator:
         leg_means = [float(np.mean(leg_delays_rec[:, i])) for i in range(n_legs)]
         overflow_rates = [float(np.mean(buffer_overflows[:, i]) * 100) for i in range(n_legs)]
 
-        # Vulnerability: variance / max(buffer, 1)
+        
         vuln_scores = [legs[i].variance_minutes / max(1.0, legs[i].buffer_after) for i in range(n_legs)]
         vuln_idx = int(np.argmax(vuln_scores))
 
@@ -137,7 +120,6 @@ class DelayPropagationSimulator:
         else:
             tight_idx = 0
 
-        # Sensitivity: +10min on first leg
         sens = self._sensitivity(legs, departure, deadline, prob_success)
 
         sample = list(arrival_times[:min(200, self.n)])

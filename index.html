@@ -48,15 +48,15 @@ body {
 
 .serif { font-family: 'Instrument Serif', serif; }
 
-/* ── Scrollbar ──────────────────────────────────────────── */
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-/* ── Layout ─────────────────────────────────────────────── */
+
 .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
-/* ── Header ─────────────────────────────────────────────── */
+
 header {
   position: sticky; top: 0; z-index: 200;
   background: rgba(8,12,20,0.92);
@@ -78,7 +78,7 @@ header {
 
 .logo-text {
   font-family: 'Instrument Serif', serif;
-  font-size: 1.3rem; letter-spacing: 0.01em;
+  font-size: 1.8rem; letter-spacing: 0.04em;
 }
 
 .logo-v {
@@ -101,7 +101,7 @@ header {
   box-shadow: 0 0 5px var(--green); animation: blink 2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-/* ── City Route Ticker ──────────────────────────────────── */
+
 .ticker {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -116,7 +116,7 @@ header {
 .ticker-item { font-size: 0.68rem; color: var(--text3); display: flex; align-items: center; gap: 8px; }
 .ticker-item span { color: var(--amber); }
 
-/* ── Hero ───────────────────────────────────────────────── */
+
 .hero {
   padding: 64px 0 48px;
   position: relative; overflow: hidden;
@@ -184,7 +184,7 @@ header {
   font-size: 0.72rem; color: var(--text2);
 }
 
-/* ── Form Panel ─────────────────────────────────────────── */
+
 .form-panel {
   background: var(--surface);
   border: 1px solid var(--border2);
@@ -311,7 +311,7 @@ input[type="range"]::-webkit-slider-thumb {
 .submit-btn.loading .btn-spinner { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Route Info Bar ─────────────────────────────────────── */
+
 .route-info-bar {
   background: var(--surface2); border-radius: 8px;
   padding: 10px 14px; margin-bottom: 14px;
@@ -322,7 +322,7 @@ input[type="range"]::-webkit-slider-thumb {
 .route-info-bar.visible { display: flex; }
 .route-info-bar strong { color: var(--amber); }
 
-/* ── Why Different ──────────────────────────────────────── */
+
 .why-section {
   padding: 48px 0;
   border-top: 1px solid var(--border);
@@ -350,7 +350,7 @@ input[type="range"]::-webkit-slider-thumb {
 .why-row strong { color: var(--text); display: block; margin-bottom: 1px; font-size: 0.78rem; }
 .why-row span { color: var(--text2); font-size: 0.72rem; }
 
-/* ── Results ────────────────────────────────────────────── */
+
 #results-section { display: none; padding: 48px 0; }
 #results-section.active { display: block; }
 
@@ -378,7 +378,7 @@ input[type="range"]::-webkit-slider-thumb {
 .tag-yellow{ background: var(--yellow-dim);color: var(--yellow);border: 1px solid rgba(234,179,8,0.2); }
 .tag-blue  { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(59,130,246,0.2); }
 
-/* ── Rec Banner ─────────────────────────────────────────── */
+
 .rec-banner {
   background: var(--surface);
   border: 1px solid rgba(245,158,11,0.2);
@@ -392,7 +392,7 @@ input[type="range"]::-webkit-slider-thumb {
 .rec-main { font-family: 'Instrument Serif', serif; font-size: 0.95rem; margin-bottom: 2px; }
 .rec-sub { font-size: 0.72rem; color: var(--text2); }
 
-/* ── Options Grid ───────────────────────────────────────── */
+
 .options-grid {
   display: grid; grid-template-columns: repeat(3,1fr);
   gap: 14px; margin-bottom: 28px;
@@ -422,7 +422,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .opt-body { padding: 16px; }
 
-/* ── Gauge Arc ──────────────────────────────────────────── */
+
 .gauge-wrap { text-align: center; padding: 8px 0 12px; }
 
 .gauge { position: relative; width: 100px; height: 100px; margin: 0 auto 8px; }
@@ -442,7 +442,7 @@ input[type="range"]::-webkit-slider-thumb {
 .gauge-label { font-size: 0.65rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
 .gauge-sub { font-size: 0.65rem; color: var(--text3); margin-top: 3px; }
 
-/* ── Arrival Band ───────────────────────────────────────── */
+
 .arr-band {
   background: var(--surface2); border-radius: 6px;
   padding: 9px 12px; margin: 10px 0;
@@ -456,7 +456,7 @@ input[type="range"]::-webkit-slider-thumb {
 .arr-val.avg  { color: var(--text); }
 .arr-val.worst{ color: var(--red); }
 
-/* ── Metrics ────────────────────────────────────────────── */
+
 .metric-list { margin: 10px 0; }
 .metric-row {
   display: flex; justify-content: space-between;
@@ -469,7 +469,7 @@ input[type="range"]::-webkit-slider-thumb {
 .mk { color: var(--text2); }
 .mv { font-weight: 600; }
 
-/* ── Leg Timeline ───────────────────────────────────────── */
+
 .legs-wrap { margin-top: 12px; }
 .legs-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 8px; }
 
@@ -509,7 +509,7 @@ input[type="range"]::-webkit-slider-thumb {
 .buf-bar { flex: 1; height: 2px; background: var(--surface3); border-radius: 1px; overflow: hidden; }
 .buf-fill { height: 100%; border-radius: 1px; transition: width 0.5s ease; }
 
-/* ── Risk Box ───────────────────────────────────────────── */
+
 .risk-box {
   background: var(--surface2); border-radius: 8px;
   padding: 12px 14px; margin-top: 12px;
@@ -531,7 +531,7 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 0.65rem; color: var(--text2); margin-top: 6px;
 }
 
-/* ── Map ────────────────────────────────────────────────── */
+
 .map-section {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; overflow: hidden; margin-bottom: 28px;
@@ -568,7 +568,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 #map { height: 380px; }
 
-/* ── Distance Info ──────────────────────────────────────── */
+
 .dist-bar {
   display: grid; grid-template-columns: repeat(5, 1fr);
   gap: 1px; background: var(--border);
@@ -581,7 +581,7 @@ input[type="range"]::-webkit-slider-thumb {
 .dist-val { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--amber); }
 .dist-key { font-size: 0.62rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
 
-/* ── Histogram ──────────────────────────────────────────── */
+
 .hist-section {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 18px; margin-bottom: 28px;
@@ -599,7 +599,7 @@ input[type="range"]::-webkit-slider-thumb {
 #hist-canvas { width: 100%; height: 130px; display: block; }
 .hist-legend { font-size: 0.65rem; color: var(--text3); margin-top: 6px; }
 
-/* ── Comparison Table ───────────────────────────────────── */
+
 .table-section {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; overflow: hidden; margin-bottom: 36px;
@@ -624,7 +624,7 @@ td {
 tr:last-child td { border-bottom: none; }
 tr.rec-row td { background: rgba(34,197,94,0.03); }
 
-/* ── Risk Pills ─────────────────────────────────────────── */
+
 .rpill {
   display: inline-flex; align-items: center;
   padding: 2px 9px; border-radius: 4px;
@@ -635,7 +635,7 @@ tr.rec-row td { background: rgba(34,197,94,0.03); }
 .rpill-Medium { background: var(--yellow-dim);color: var(--yellow);border: 1px solid rgba(234,179,8,0.2); }
 .rpill-High   { background: var(--red-dim);   color: var(--red);   border: 1px solid rgba(239,68,68,0.2); }
 
-/* ── Loading Overlay ────────────────────────────────────── */
+
 .loading-overlay {
   display: none; position: fixed; inset: 0; z-index: 500;
   background: rgba(8,12,20,0.88); backdrop-filter: blur(12px);
@@ -655,7 +655,7 @@ tr.rec-row td { background: rgba(34,197,94,0.03); }
 .loading-title { font-family: 'Instrument Serif', serif; font-size: 1rem; margin-bottom: 5px; }
 .loading-steps { font-size: 0.72rem; color: var(--text2); line-height: 2; }
 
-/* ── Animations ─────────────────────────────────────────── */
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -664,7 +664,7 @@ tr.rec-row td { background: rgba(34,197,94,0.03); }
 .d1{animation-delay:0.05s;opacity:0} .d2{animation-delay:0.12s;opacity:0}
 .d3{animation-delay:0.2s;opacity:0}  .d4{animation-delay:0.28s;opacity:0}
 
-/* ── Leaflet override ───────────────────────────────────── */
+
 .leaflet-popup-content-wrapper {
   background: var(--surface) !important;
   color: var(--text) !important;
@@ -677,14 +677,14 @@ tr.rec-row td { background: rgba(34,197,94,0.03); }
 .leaflet-popup-tip { background: var(--surface) !important; }
 .leaflet-popup-content { margin: 10px 14px !important; line-height: 1.7 !important; }
 
-/* ── Footer ─────────────────────────────────────────────── */
+
 footer {
   background: var(--surface); border-top: 1px solid var(--border);
   padding: 18px; text-align: center;
   font-size: 0.65rem; color: var(--text3);
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
+
 @media (max-width: 900px) {
   .hero-inner, .why-grid { grid-template-columns: 1fr; }
   .options-grid { grid-template-columns: 1fr; }
@@ -695,7 +695,7 @@ footer {
 </head>
 <body>
 
-<!-- Loading Overlay -->
+
 <div class="loading-overlay" id="overlay">
   <div class="loading-card">
     <div class="loading-spinner"></div>
@@ -709,7 +709,7 @@ footer {
   </div>
 </div>
 
-<!-- Header -->
+
 <header>
   <div class="logo-wrap">
     <div class="logo-mark">🧭</div>
@@ -722,14 +722,14 @@ footer {
   </div>
 </header>
 
-<!-- Ticker -->
+
 <div class="ticker">
   <div class="ticker-inner" id="ticker">
     <!-- populated by JS -->
   </div>
 </div>
 
-<!-- Hero -->
+
 <section class="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
@@ -746,11 +746,11 @@ footer {
           simulations and tell you the exact probability of arriving before your deadline.
         </p>
         <div class="hero-cities" id="cityPills">
-          <!-- populated by JS -->
+        
         </div>
       </div>
 
-      <!-- Form -->
+ 
       <div class="form-panel">
         <div class="form-panel-head">
           <span style="color:var(--amber)">▶</span>
@@ -829,7 +829,7 @@ footer {
   </div>
 </section>
 
-<!-- Why Different -->
+
 <section class="why-section">
   <div class="container">
     <div style="text-align:center;margin-bottom:28px">
@@ -860,7 +860,7 @@ footer {
   </div>
 </section>
 
-<!-- Results -->
+
 <section id="results-section">
   <div class="container">
     <div class="results-hdr au d1">
@@ -882,7 +882,7 @@ footer {
       </div>
     </div>
 
-    <!-- Distance stats bar -->
+
     <div class="dist-bar au d2" id="distBar">
       <div class="dist-item"><div class="dist-val" id="dDist">—</div><div class="dist-key">Distance</div></div>
       <div class="dist-item"><div class="dist-val" id="dWindow">—</div><div class="dist-key">Deadline Window</div></div>
@@ -891,10 +891,9 @@ footer {
       <div class="dist-item"><div class="dist-val" id="dFastest">—</div><div class="dist-key">Fastest Option</div></div>
     </div>
 
-    <!-- Options -->
+ 
     <div class="options-grid au d3" id="optGrid"></div>
 
-    <!-- Histogram -->
     <div class="hist-section au d4">
       <div class="hist-title">Arrival Time Distribution</div>
       <div class="hist-sub">Monte Carlo simulation output — spread of predicted arrival times across all runs</div>
@@ -903,7 +902,7 @@ footer {
       <div class="hist-legend" id="histLegend"></div>
     </div>
 
-    <!-- Map -->
+  
     <div class="map-section au d4">
       <div class="map-top">
         <div class="map-title">Route Visualization</div>
@@ -918,7 +917,7 @@ footer {
       <div id="map"></div>
     </div>
 
-    <!-- Comparison Table -->
+    
     <div class="table-section au d4">
       <div class="table-top">
         <div class="table-title">Full Comparison</div>
@@ -951,12 +950,8 @@ footer {
   Not a navigation service
 </footer>
 <script>
-// SureTrip v3 — Complete JavaScript Engine
-// Multi-city delay propagation simulation + rendering
 
-// ═══════════════════════════════════════════════════════════
-//  DATA LAYER
-// ═══════════════════════════════════════════════════════════
+
 
 const CITIES = {
   delhi:      { name:"Delhi",      lat:28.6139, lon:77.2090,  code:"DEL", emoji:"🏛" },
@@ -1006,8 +1001,7 @@ const MODES = {
   volvo_bus:      { name:"Volvo/AC Bus",      icon:"🚐", color:"#7c3aed" },
 };
 
-// ── Route Database ────────────────────────────────────────
-// All 10 combinations with realistic Indian transport data
+
 const ROUTES = {
   "delhi_lucknow": {
     distance: 556,
@@ -1225,7 +1219,7 @@ function getRoute(src, dst) {
   const revKey = `${dst}_${src}`;
   if (ROUTES[key]) return { ...ROUTES[key], isReversed: false };
   if (ROUTES[revKey]) {
-    // Mirror route with legs reversed
+   
     const orig = ROUTES[revKey];
     const mirrored = { distance: orig.distance, isReversed: true };
     for (const opt of ['fastest','cheapest','reliable']) {
@@ -1246,9 +1240,7 @@ function resolveHub(key) {
   return HUBS[key] || { name: key, lat: 0, lon: 0 };
 }
 
-// ═══════════════════════════════════════════════════════════
-//  SIMULATION ENGINE (Client-side Monte Carlo)
-// ═══════════════════════════════════════════════════════════
+
 
 function randn() {
   let u, v;
@@ -1302,7 +1294,7 @@ function simulateJourney(legs, depMs, deadlineMs, nRuns) {
   const tightScores = legs.slice(0, -1).map((l) => l.buf / Math.max(1, l.v));
   const tightIdx = tightScores.length ? tightScores.indexOf(Math.min(...tightScores)) : 0;
 
-  // Sensitivity: +10min on leg 0
+
   const sens = computeSensitivity(legs, deadMin, Math.floor(nRuns / 2), reliab);
 
   return {
@@ -1337,9 +1329,7 @@ function classifyRisk(pct) {
   return              { level: "High",   color: "#ef4444", cssClass: "High" };
 }
 
-// ═══════════════════════════════════════════════════════════
-//  MAIN PLAN JOURNEY
-// ═══════════════════════════════════════════════════════════
+
 
 let currentOptions = [];
 let currentDepMs = 0;
@@ -1385,7 +1375,7 @@ function planJourney() {
       const totalTime = legs.reduce((s, l) => s + l.base + l.buf, 0) - legs[legs.length - 1].buf;
       const risk = classifyRisk(sim.reliability);
 
-      // Risk explanation
+      
       const vuln = legs[sim.vulnIdx];
       const vulnMode = MODES[vuln.mode] || { name: vuln.mode };
       const vulnDesc = `${vulnMode.name}: ${resolveHub(vuln.from).name.split('(')[0].trim()} → ${resolveHub(vuln.to).name.split('(')[0].trim()} (±${vuln.v} min, ${sim.overflowRates[sim.vulnIdx].toFixed(0)}% overflow)`;
@@ -1426,9 +1416,7 @@ function planJourney() {
   }, 700);
 }
 
-// ═══════════════════════════════════════════════════════════
-//  RENDERING
-// ═══════════════════════════════════════════════════════════
+
 
 function fmtMin(m) {
   const h = Math.floor(m / 60), mn = Math.round(m % 60);
@@ -1445,17 +1433,17 @@ function renderResults(results, src, dst, nSims, depMs, deadMs, distKm) {
   const best = results[0];
   const deadMin = (deadMs - depMs) / 60000;
 
-  // Header
+ 
   document.getElementById('resTitle').textContent = `${CITIES[src].emoji} ${CITIES[src].name} → ${CITIES[dst].emoji} ${CITIES[dst].name}`;
   document.getElementById('resMeta').textContent = `Departure: ${new Date(depMs).toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'})} · Deadline window: ${fmtMin(deadMin)}`;
   document.getElementById('simTag').textContent = `${nSims} simulations`;
   document.getElementById('distTag').textContent = `${distKm} km`;
 
-  // Recommendation
+
   document.getElementById('recMain').textContent = `"${best.name}" — ${best.sim.reliability}% on-time probability (${best.risk.level} Risk)`;
   document.getElementById('recSub').textContent = `Total time: ${fmtMin(best.totalTime)} · Cost: ₹${best.totalCost.toLocaleString('en-IN')} · Avg arrival: ${fmtArr(depMs, best.sim.mean)}`;
 
-  // Stats bar
+
   const cheapest = [...results].sort((a,b) => a.totalCost - b.totalCost)[0];
   const fastest = [...results].sort((a,b) => a.totalTime - b.totalTime)[0];
   document.getElementById('dDist').textContent = `${distKm} km`;
@@ -1464,12 +1452,12 @@ function renderResults(results, src, dst, nSims, depMs, deadMs, distKm) {
   document.getElementById('dBestCost').textContent = `₹${cheapest.totalCost.toLocaleString('en-IN')}`;
   document.getElementById('dFastest').textContent = fmtMin(fastest.totalTime);
 
-  // Options grid
+  
   const grid = document.getElementById('optGrid');
   grid.innerHTML = '';
   results.forEach((opt, idx) => renderOptionCard(opt, idx, grid, depMs));
 
-  // Tabs
+ 
   document.getElementById('mapTabs').innerHTML = results.map((r, i) =>
     `<button class="mtab${i===0?' active':''}" onclick="showMap(${i})">${r.icon} ${r.name}</button>`
   ).join('');
@@ -1605,9 +1593,7 @@ function renderCompTable(results, depMs) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-//  MAP
-// ═══════════════════════════════════════════════════════════
+//map
 
 function initMap(opt, src, dst) {
   if (leafletMap) { leafletMap.remove(); leafletMap = null; }
@@ -1681,9 +1667,9 @@ function showMap(idx) {
   if (currentOptions[idx]) renderMapRoute(currentOptions[idx]);
 }
 
-// ═══════════════════════════════════════════════════════════
-//  HISTOGRAM
-// ═══════════════════════════════════════════════════════════
+
+// histogram
+
 
 function renderHist(idx) {
   document.querySelectorAll('.htab').forEach((t, i) => t.classList.toggle('active', i === idx));
@@ -1722,7 +1708,7 @@ function renderHist(idx) {
   ctx.fillStyle = 'rgba(239,68,68,0.06)';
   ctx.fillRect(Math.max(deadX, 24), 0, W - Math.max(deadX, 24), H - 22);
 
-  // Bars
+  
   bins.forEach((count, i) => {
     const x = 24 + i * barW;
     const barH = (count / maxBin) * (H - 34);
@@ -1734,7 +1720,7 @@ function renderHist(idx) {
     ctx.fillRect(x + 1, H - 23, barW - 2, 1);
   });
 
-  // Deadline line
+ 
   if (deadX > 24 && deadX < W) {
     ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.5;
     ctx.setLineDash([4, 3]);
@@ -1744,7 +1730,8 @@ function renderHist(idx) {
     ctx.fillText('Deadline', deadX + 3, 12);
   }
 
-  // Mean line
+  
+
   const meanX = 24 + ((opt.sim.mean - minA) / range) * (W - 48);
   if (meanX > 24 && meanX < W) {
     ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 1;
@@ -1755,7 +1742,7 @@ function renderHist(idx) {
     ctx.fillText('Mean', meanX + 2, H - 24);
   }
 
-  // Axis labels
+
   ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.font = '8px JetBrains Mono,monospace';
   ctx.fillText(fmtMin(minA), 24, H - 5);
   ctx.fillText(fmtMin(maxA), W - 36, H - 5);
@@ -1769,9 +1756,7 @@ function switchHist(idx) {
   renderHist(idx);
 }
 
-// ═══════════════════════════════════════════════════════════
-//  UI HELPERS
-// ═══════════════════════════════════════════════════════════
+
 
 function swapCities() {
   const src = document.getElementById('src');
@@ -1805,7 +1790,7 @@ function onCityChange() {
   }
 }
 
-// Pref chips
+
 document.querySelectorAll('.pref-chip').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.pref-chip').forEach(b => b.classList.remove('active'));
@@ -1813,7 +1798,7 @@ document.querySelectorAll('.pref-chip').forEach(btn => {
   });
 });
 
-// Ticker
+
 (function buildTicker() {
   const pairs = [
     ['Delhi','Lucknow',556],['Delhi','Chandigarh',250],['Delhi','Jaipur',270],
@@ -1827,7 +1812,7 @@ document.querySelectorAll('.pref-chip').forEach(btn => {
   if (t) t.innerHTML = html;
 })();
 
-// City pills in hero
+
 (function buildPills() {
   const el = document.getElementById('cityPills');
   if (!el) return;
@@ -1836,7 +1821,7 @@ document.querySelectorAll('.pref-chip').forEach(btn => {
   ).join('');
 })();
 
-// Default dates
+
 (function setDefaults() {
   const pad = n => String(n).padStart(2,'0');
   const fmt = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
@@ -1845,7 +1830,7 @@ document.querySelectorAll('.pref-chip').forEach(btn => {
   document.getElementById('dead').value = fmt(new Date(now.getTime() + 36000000));
 })();
 
-// Init route info on load
+
 onCityChange();
 
 </script>
