@@ -6,9 +6,12 @@
 <title>SureTrip v3 — Multi-City Reliability Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
 <style>
+/* ═══════════════════════════════════════════════════════════
+   DARK MODE — UNTOUCHED
+═══════════════════════════════════════════════════════════ */
 :root {
   --bg:        #080c14;
   --surface:   #0e1520;
@@ -44,19 +47,17 @@ body {
   font-size: 13px;
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .serif { font-family: 'Instrument Serif', serif; }
 
-/* ── Scrollbar ──────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-/* ── Layout ─────────────────────────────────────────────── */
 .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
-/* ── Header ─────────────────────────────────────────────── */
 header {
   position: sticky; top: 0; z-index: 200;
   background: rgba(8,12,20,0.92);
@@ -64,6 +65,7 @@ header {
   border-bottom: 1px solid var(--border);
   padding: 0 24px; height: 54px;
   display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .logo-wrap { display: flex; align-items: center; gap: 10px; }
@@ -101,7 +103,6 @@ header {
   box-shadow: 0 0 5px var(--green); animation: blink 2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-/* ── City Route Ticker ──────────────────────────────────── */
 .ticker {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -116,7 +117,6 @@ header {
 .ticker-item { font-size: 0.68rem; color: var(--text3); display: flex; align-items: center; gap: 8px; }
 .ticker-item span { color: var(--amber); }
 
-/* ── Hero ───────────────────────────────────────────────── */
 .hero {
   padding: 64px 0 48px;
   position: relative; overflow: hidden;
@@ -184,7 +184,6 @@ header {
   font-size: 0.72rem; color: var(--text2);
 }
 
-/* ── Form Panel ─────────────────────────────────────────── */
 .form-panel {
   background: var(--surface);
   border: 1px solid var(--border2);
@@ -311,7 +310,6 @@ input[type="range"]::-webkit-slider-thumb {
 .submit-btn.loading .btn-spinner { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Route Info Bar ─────────────────────────────────────── */
 .route-info-bar {
   background: var(--surface2); border-radius: 8px;
   padding: 10px 14px; margin-bottom: 14px;
@@ -322,7 +320,6 @@ input[type="range"]::-webkit-slider-thumb {
 .route-info-bar.visible { display: flex; }
 .route-info-bar strong { color: var(--amber); }
 
-/* ── Why Different ──────────────────────────────────────── */
 .why-section {
   padding: 48px 0;
   border-top: 1px solid var(--border);
@@ -335,7 +332,6 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .why-divider { background: var(--border); }
-
 .why-col { padding: 8px 0; }
 
 .why-col-title {
@@ -350,7 +346,6 @@ input[type="range"]::-webkit-slider-thumb {
 .why-row strong { color: var(--text); display: block; margin-bottom: 1px; font-size: 0.78rem; }
 .why-row span { color: var(--text2); font-size: 0.72rem; }
 
-/* ── Results ────────────────────────────────────────────── */
 #results-section { display: none; padding: 48px 0; }
 #results-section.active { display: block; }
 
@@ -378,7 +373,6 @@ input[type="range"]::-webkit-slider-thumb {
 .tag-yellow{ background: var(--yellow-dim);color: var(--yellow);border: 1px solid rgba(234,179,8,0.2); }
 .tag-blue  { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(59,130,246,0.2); }
 
-/* ── Rec Banner ─────────────────────────────────────────── */
 .rec-banner {
   background: var(--surface);
   border: 1px solid rgba(245,158,11,0.2);
@@ -392,7 +386,6 @@ input[type="range"]::-webkit-slider-thumb {
 .rec-main { font-family: 'Instrument Serif', serif; font-size: 0.95rem; margin-bottom: 2px; }
 .rec-sub { font-size: 0.72rem; color: var(--text2); }
 
-/* ── Options Grid ───────────────────────────────────────── */
 .options-grid {
   display: grid; grid-template-columns: repeat(3,1fr);
   gap: 14px; margin-bottom: 28px;
@@ -422,7 +415,6 @@ input[type="range"]::-webkit-slider-thumb {
 
 .opt-body { padding: 16px; }
 
-/* ── Gauge Arc ──────────────────────────────────────────── */
 .gauge-wrap { text-align: center; padding: 8px 0 12px; }
 
 .gauge { position: relative; width: 100px; height: 100px; margin: 0 auto 8px; }
@@ -442,7 +434,6 @@ input[type="range"]::-webkit-slider-thumb {
 .gauge-label { font-size: 0.65rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
 .gauge-sub { font-size: 0.65rem; color: var(--text3); margin-top: 3px; }
 
-/* ── Arrival Band ───────────────────────────────────────── */
 .arr-band {
   background: var(--surface2); border-radius: 6px;
   padding: 9px 12px; margin: 10px 0;
@@ -456,7 +447,6 @@ input[type="range"]::-webkit-slider-thumb {
 .arr-val.avg  { color: var(--text); }
 .arr-val.worst{ color: var(--red); }
 
-/* ── Metrics ────────────────────────────────────────────── */
 .metric-list { margin: 10px 0; }
 .metric-row {
   display: flex; justify-content: space-between;
@@ -469,7 +459,6 @@ input[type="range"]::-webkit-slider-thumb {
 .mk { color: var(--text2); }
 .mv { font-weight: 600; }
 
-/* ── Leg Timeline ───────────────────────────────────────── */
 .legs-wrap { margin-top: 12px; }
 .legs-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 8px; }
 
@@ -509,7 +498,6 @@ input[type="range"]::-webkit-slider-thumb {
 .buf-bar { flex: 1; height: 2px; background: var(--surface3); border-radius: 1px; overflow: hidden; }
 .buf-fill { height: 100%; border-radius: 1px; transition: width 0.5s ease; }
 
-/* ── Risk Box ───────────────────────────────────────────── */
 .risk-box {
   background: var(--surface2); border-radius: 8px;
   padding: 12px 14px; margin-top: 12px;
@@ -531,7 +519,6 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 0.65rem; color: var(--text2); margin-top: 6px;
 }
 
-/* ── Map ────────────────────────────────────────────────── */
 .map-section {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; overflow: hidden; margin-bottom: 28px;
@@ -568,7 +555,6 @@ input[type="range"]::-webkit-slider-thumb {
 
 #map { height: 380px; }
 
-/* ── Distance Info ──────────────────────────────────────── */
 .dist-bar {
   display: grid; grid-template-columns: repeat(5, 1fr);
   gap: 1px; background: var(--border);
@@ -581,7 +567,6 @@ input[type="range"]::-webkit-slider-thumb {
 .dist-val { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--amber); }
 .dist-key { font-size: 0.62rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
 
-/* ── Histogram ──────────────────────────────────────────── */
 .hist-section {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 18px; margin-bottom: 28px;
@@ -599,7 +584,6 @@ input[type="range"]::-webkit-slider-thumb {
 #hist-canvas { width: 100%; height: 130px; display: block; }
 .hist-legend { font-size: 0.65rem; color: var(--text3); margin-top: 6px; }
 
-/* ── Comparison Table ───────────────────────────────────── */
 .table-section {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; overflow: hidden; margin-bottom: 36px;
@@ -624,7 +608,6 @@ td {
 tr:last-child td { border-bottom: none; }
 tr.rec-row td { background: rgba(34,197,94,0.03); }
 
-/* ── Risk Pills ─────────────────────────────────────────── */
 .rpill {
   display: inline-flex; align-items: center;
   padding: 2px 9px; border-radius: 4px;
@@ -635,7 +618,6 @@ tr.rec-row td { background: rgba(34,197,94,0.03); }
 .rpill-Medium { background: var(--yellow-dim);color: var(--yellow);border: 1px solid rgba(234,179,8,0.2); }
 .rpill-High   { background: var(--red-dim);   color: var(--red);   border: 1px solid rgba(239,68,68,0.2); }
 
-/* ── Loading Overlay ────────────────────────────────────── */
 .loading-overlay {
   display: none; position: fixed; inset: 0; z-index: 500;
   background: rgba(8,12,20,0.88); backdrop-filter: blur(12px);
@@ -655,7 +637,6 @@ tr.rec-row td { background: rgba(34,197,94,0.03); }
 .loading-title { font-family: 'Instrument Serif', serif; font-size: 1rem; margin-bottom: 5px; }
 .loading-steps { font-size: 0.72rem; color: var(--text2); line-height: 2; }
 
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -663,7 +644,6 @@ tr.rec-row td { background: rgba(34,197,94,0.03); }
 .au { animation: fadeUp 0.45s ease forwards; }
 .d1{animation-delay:0.05s;opacity:0} .d2{animation-delay:0.12s;opacity:0}
 .d3{animation-delay:0.2s;opacity:0}  .d4{animation-delay:0.28s;opacity:0}
-
 
 .leaflet-popup-content-wrapper {
   background: var(--surface) !important;
@@ -677,19 +657,231 @@ tr.rec-row td { background: rgba(34,197,94,0.03); }
 .leaflet-popup-tip { background: var(--surface) !important; }
 .leaflet-popup-content { margin: 10px 14px !important; line-height: 1.7 !important; }
 
-
 footer {
   background: var(--surface); border-top: 1px solid var(--border);
   padding: 18px; text-align: center;
   font-size: 0.65rem; color: var(--text3);
 }
 
-
 @media (max-width: 900px) {
   .hero-inner, .why-grid { grid-template-columns: 1fr; }
   .options-grid { grid-template-columns: 1fr; }
   .dist-bar { grid-template-columns: 1fr 1fr; }
   .time-row { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FANCY THEME TOGGLE BUTTON
+═══════════════════════════════════════════════════════════ */
+.theme-toggle-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Completely hide the real checkbox — no space, no click area bleed */
+.theme-toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* The pill track */
+.theme-toggle-label {
+  position: relative;
+  display: block;
+  width: 58px;
+  height: 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0f1f3d 0%, #1e3460 100%);
+  border: 1.5px solid rgba(100, 149, 237, 0.35);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Stars decoration (dark mode) — sits BEHIND the thumb via z-index */
+.theme-toggle-label::before {
+  content: '✦ ✦';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 5px;
+  letter-spacing: 3px;
+  color: rgba(147, 197, 253, 0.6);
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Sun decoration (light mode) — right side */
+.theme-toggle-label::after {
+  content: '☀';
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.6);
+  font-size: 14px;
+  color: rgba(245, 158, 11, 0.0);
+  transition: color 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+  line-height: 1;
+}
+
+/* Sliding thumb knob */
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #d0dcf5, #e8efff);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.7);
+  transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.toggle-thumb::after {
+  content: '🌙';
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+/* ── Checked = Light Mode ──────────────────────────────── */
+.theme-toggle-input:checked + .theme-toggle-label {
+  background: linear-gradient(135deg, #ffe9a0 0%, #ffd15e 100%);
+  border-color: rgba(245, 158, 11, 0.45);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.theme-toggle-input:checked + .theme-toggle-label::before {
+  opacity: 0;
+}
+
+.theme-toggle-input:checked + .theme-toggle-label::after {
+  color: rgba(180, 100, 0, 0.5);
+  transform: translateY(-50%) scale(1);
+}
+
+.theme-toggle-input:checked + .theme-toggle-label .toggle-thumb {
+  left: 33px;
+  background: linear-gradient(145deg, #f59e0b, #fbbf24);
+  box-shadow: 0 2px 8px rgba(245,158,11,0.5), inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+.theme-toggle-input:checked + .theme-toggle-label .toggle-thumb::after {
+  content: '☀️';
+}
+
+.theme-toggle-label:hover {
+  transform: scale(1.06);
+  transition: transform 0.15s ease, background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.theme-toggle-label:active {
+  transform: scale(0.97);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT MODE — All overrides here, dark mode untouched above
+═══════════════════════════════════════════════════════════ */
+body.light {
+  /* Background — warm off-white, not blue-grey */
+  --bg:        #f7f5f2;
+  /* Surfaces — clean whites with warm tint */
+  --surface:   #ffffff;
+  --surface2:  #faf9f7;
+  --surface3:  #f0ede8;
+  /* Borders — warm light greys */
+  --border:    #e4dfd9;
+  --border2:   #cec9c2;
+  /* Text — warm near-black */
+  --text:      #1a1510;
+  --text2:     #4a4035;
+  --text3:     #8c8078;
+  /* Accents — slightly richer in light */
+  --amber:     #c96a00;
+  --amber-dim: rgba(201,106,0,0.1);
+  --green:     #15803d;
+  --green-dim: rgba(21,128,61,0.1);
+  --red:       #c81e1e;
+  --red-dim:   rgba(200,30,30,0.1);
+  --yellow:    #a16207;
+  --yellow-dim:rgba(161,98,7,0.1);
+  --blue:      #1a4ec4;
+  --blue-dim:  rgba(26,78,196,0.1);
+  --teal:      #0a7060;
+  --teal-dim:  rgba(10,112,96,0.1);
+
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Header — warm parchment frosted glass instead of blue-grey */
+body.light header {
+  background: rgba(247, 245, 242, 0.93);
+  border-bottom: 1px solid var(--border);
+}
+
+body.light .header-stats {
+  color: var(--text2);
+}
+
+/* Loading overlay */
+body.light .loading-overlay {
+  background: rgba(247, 245, 242, 0.90);
+}
+
+/* Hero — warm gradient, no blue */
+body.light .hero-grid,
+body.light .hero-glow {
+  display: none;
+}
+
+body.light .hero {
+  background: linear-gradient(160deg, #f7f5f2 0%, #f0ebe3 100%);
+}
+
+/* Ticker strip */
+body.light .ticker {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Selects and date inputs */
+body.light select,
+body.light input[type="datetime-local"] {
+  color-scheme: light;
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Form panel — softer shadow */
+body.light .form-panel {
+  box-shadow: 0 0 0 1px rgba(201,106,0,0.07), 0 12px 40px rgba(0,0,0,0.08);
+}
+
+/* rec-banner inset glow */
+body.light .rec-banner {
+  box-shadow: inset 0 0 40px rgba(201,106,0,0.04);
+}
+
+/* Comparison table rec-row */
+body.light tr.rec-row td {
+  background: rgba(21,128,61,0.04);
 }
 </style>
 </head>
@@ -719,6 +911,14 @@ footer {
   <div class="header-stats">
     <div class="header-stat"><div class="stat-dot"></div> Engine online</div>
     <div class="header-stat">5 cities · 10 routes · Delay propagation</div>
+  </div>
+
+  <!-- Fancy Toggle -->
+  <div class="theme-toggle-wrap">
+    <input type="checkbox" id="themeToggle" class="theme-toggle-input">
+    <label for="themeToggle" class="theme-toggle-label">
+      <span class="toggle-thumb"></span>
+    </label>
   </div>
 </header>
 
@@ -829,8 +1029,6 @@ footer {
   </div>
 </section>
 
-<!-- Why Different -->
-
 <!-- Results -->
 <section id="results-section">
   <div class="container">
@@ -921,9 +1119,8 @@ footer {
   Monte Carlo Delay Propagation ·
   Not a navigation service
 </footer>
+
 <script>
-
-
 const CITIES = {
   delhi:      { name:"Delhi",      lat:28.6139, lon:77.2090,  code:"DEL", emoji:"🏛" },
   lucknow:    { name:"Lucknow",    lat:26.8467, lon:80.9462,  code:"LKO", emoji:"🕌" },
@@ -971,7 +1168,6 @@ const MODES = {
   intercity_bus:  { name:"Intercity Bus",     icon:"🚎", color:"#d97706" },
   volvo_bus:      { name:"Volvo/AC Bus",      icon:"🚐", color:"#7c3aed" },
 };
-
 
 const ROUTES = {
   "delhi_lucknow": {
@@ -1190,7 +1386,6 @@ function getRoute(src, dst) {
   const revKey = `${dst}_${src}`;
   if (ROUTES[key]) return { ...ROUTES[key], isReversed: false };
   if (ROUTES[revKey]) {
-    // Mirror route with legs reversed
     const orig = ROUTES[revKey];
     const mirrored = { distance: orig.distance, isReversed: true };
     for (const opt of ['fastest','cheapest','reliable']) {
@@ -1236,7 +1431,6 @@ function simulateJourney(legs, depMs, deadlineMs, nRuns) {
       const raw = randn() * l.v;
       const clipped = Math.max(-0.5 * l.v, Math.min(2.5 * l.v, raw));
       const legDelay = Math.max(0, clipped);
-
       legDelays[i].push(legDelay + carried);
       const overflow = Math.max(0, carried + legDelay - l.buf);
       if (overflow > 0) overflowCounts[i]++;
@@ -1263,7 +1457,6 @@ function simulateJourney(legs, depMs, deadlineMs, nRuns) {
   const tightScores = legs.slice(0, -1).map((l) => l.buf / Math.max(1, l.v));
   const tightIdx = tightScores.length ? tightScores.indexOf(Math.min(...tightScores)) : 0;
 
-  // Sensitivity: +10min on leg 0
   const sens = computeSensitivity(legs, deadMin, Math.floor(nRuns / 2), reliab);
 
   return {
@@ -1298,12 +1491,10 @@ function classifyRisk(pct) {
   return              { level: "High",   color: "#ef4444", cssClass: "High" };
 }
 
-
-
 let currentOptions = [];
 let currentDepMs = 0;
-let leafletMap = null;
-let mapLayers = [];
+let mapboxMap = null;
+let mapboxMarkers = [];
 
 function planJourney() {
   const src = document.getElementById('src').value;
@@ -1344,7 +1535,6 @@ function planJourney() {
       const totalTime = legs.reduce((s, l) => s + l.base + l.buf, 0) - legs[legs.length - 1].buf;
       const risk = classifyRisk(sim.reliability);
 
-      // Risk explanation
       const vuln = legs[sim.vulnIdx];
       const vulnMode = MODES[vuln.mode] || { name: vuln.mode };
       const vulnDesc = `${vulnMode.name}: ${resolveHub(vuln.from).name.split('(')[0].trim()} → ${resolveHub(vuln.to).name.split('(')[0].trim()} (±${vuln.v} min, ${sim.overflowRates[sim.vulnIdx].toFixed(0)}% overflow)`;
@@ -1385,7 +1575,6 @@ function planJourney() {
   }, 700);
 }
 
-
 function fmtMin(m) {
   const h = Math.floor(m / 60), mn = Math.round(m % 60);
   return h > 0 ? `${h}h ${mn}m` : `${mn}m`;
@@ -1401,17 +1590,14 @@ function renderResults(results, src, dst, nSims, depMs, deadMs, distKm) {
   const best = results[0];
   const deadMin = (deadMs - depMs) / 60000;
 
-  // Header
   document.getElementById('resTitle').textContent = `${CITIES[src].emoji} ${CITIES[src].name} → ${CITIES[dst].emoji} ${CITIES[dst].name}`;
   document.getElementById('resMeta').textContent = `Departure: ${new Date(depMs).toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'})} · Deadline window: ${fmtMin(deadMin)}`;
   document.getElementById('simTag').textContent = `${nSims} simulations`;
   document.getElementById('distTag').textContent = `${distKm} km`;
 
-  // Recommendation
   document.getElementById('recMain').textContent = `"${best.name}" — ${best.sim.reliability}% on-time probability (${best.risk.level} Risk)`;
   document.getElementById('recSub').textContent = `Total time: ${fmtMin(best.totalTime)} · Cost: ₹${best.totalCost.toLocaleString('en-IN')} · Avg arrival: ${fmtArr(depMs, best.sim.mean)}`;
 
-  // Stats bar
   const cheapest = [...results].sort((a,b) => a.totalCost - b.totalCost)[0];
   const fastest = [...results].sort((a,b) => a.totalTime - b.totalTime)[0];
   document.getElementById('dDist').textContent = `${distKm} km`;
@@ -1420,12 +1606,10 @@ function renderResults(results, src, dst, nSims, depMs, deadMs, distKm) {
   document.getElementById('dBestCost').textContent = `₹${cheapest.totalCost.toLocaleString('en-IN')}`;
   document.getElementById('dFastest').textContent = fmtMin(fastest.totalTime);
 
-  // Options grid
   const grid = document.getElementById('optGrid');
   grid.innerHTML = '';
   results.forEach((opt, idx) => renderOptionCard(opt, idx, grid, depMs));
 
-  // Tabs
   document.getElementById('mapTabs').innerHTML = results.map((r, i) =>
     `<button class="mtab${i===0?' active':''}" onclick="showMap(${i})">${r.icon} ${r.name}</button>`
   ).join('');
@@ -1459,7 +1643,6 @@ function renderOptionCard(opt, idx, container, depMs) {
       <span class="rpill rpill-${risk.level}">${risk.level}</span>
     </div>
     <div class="opt-body">
-
       <div class="gauge-wrap">
         <div class="gauge">
           <svg width="100" height="100" viewBox="0 0 100 100">
@@ -1535,7 +1718,6 @@ function renderOptionCard(opt, idx, container, depMs) {
       <div style="margin-top:5px;padding:7px 10px;background:var(--surface3);border-radius:6px;font-size:0.68rem;color:var(--text2)">
         <strong style="color:var(--text)">Tightest buffer:</strong> ${opt.tightDesc}
       </div>
-
     </div>
   `;
   container.appendChild(card);
@@ -1561,85 +1743,90 @@ function renderCompTable(results, depMs) {
   });
 }
 
+async function initMap(opt, src, dst) {
+  if (mapboxMap) {
+    mapboxMap.remove();
+    mapboxMap = null;
+  }
 
+ mapboxgl.accessToken = "YOUR_MAPBOX_TOKEN";
 
-function initMap(opt, src, dst) {
-  if (leafletMap) { leafletMap.remove(); leafletMap = null; }
-  const srcCity = CITIES[src], dstCity = CITIES[dst];
+  const srcCity = CITIES[src];
+  const dstCity = CITIES[dst];
   const midLat = (srcCity.lat + dstCity.lat) / 2;
   const midLon = (srcCity.lon + dstCity.lon) / 2;
 
-  leafletMap = L.map('map');
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap © CartoDB', subdomains: 'abcd', maxZoom: 18
-  }).addTo(leafletMap);
-  renderMapRoute(opt);
+  mapboxMap = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [midLon, midLat],
+    zoom: 5
+  });
+
+  mapboxMap.on('load', () => {
+    renderMapRoute(opt);
+  });
 }
 
 function renderMapRoute(opt) {
-  mapLayers.forEach(l => { try { leafletMap.removeLayer(l); } catch(e){} });
-  mapLayers = [];
-  const allCoords = [];
+  if (!mapboxMap || !opt) return;
+
+  if (mapboxMap.getSource('route')) {
+    mapboxMap.removeLayer('route');
+    mapboxMap.removeSource('route');
+  }
+
+  mapboxMarkers.forEach(m => m.remove());
+  mapboxMarkers = [];
+
+  const routeCoords = [];
 
   opt.legs.forEach((leg, i) => {
-    const from = resolveHub(leg.from);
-    const to = resolveHub(leg.to);
-    if (!from.lat || !to.lat) return;
+    const from = leg.fromHub;
+    const to = leg.toHub;
+    if (!from?.lat || !to?.lat) return;
+    const fromCoord = [from.lon, from.lat];
+    const toCoord = [to.lon, to.lat];
+    if (routeCoords.length === 0) routeCoords.push(fromCoord);
+    routeCoords.push(toCoord);
 
-    const ov = opt.sim.overflowRates[i] || 0;
-    const lineColor = ov > 30 ? '#ef4444' : ov > 10 ? '#eab308' : '#22c55e';
-    const m = MODES[leg.mode] || {};
-
-    allCoords.push([from.lat, from.lon], [to.lat, to.lon]);
-
-    const line = L.polyline([[from.lat, from.lon], [to.lat, to.lon]], {
-      color: lineColor, weight: 3.5, opacity: 0.9,
-      dashArray: leg.mode === 'flight' ? '10 6' : null,
-    }).addTo(leafletMap);
-
-    line.bindPopup(`
-      <div>
-        <div style="font-weight:700;color:${lineColor};margin-bottom:6px">${m.icon || ''} ${m.name || leg.mode}</div>
-        <div>${from.name.split('(')[0].trim()} →<br>${to.name.split('(')[0].trim()}</div>
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:8px 0">
-        <div>Base: ~${leg.base} min · ±${leg.v} min variance</div>
-        <div>Buffer: ${leg.buf} min · Cost: ₹${leg.cost}</div>
-        <div>Overflow rate: ${ov.toFixed(1)}%</div>
-        <div>Risk: ${ov > 30 ? '🔴 High' : ov > 10 ? '🟡 Medium' : '🟢 Low'}</div>
-      </div>
-    `);
-    mapLayers.push(line);
-
-    const mkIcon = (emoji, color, sz) => L.divIcon({
-      html: `<div style="background:${color};width:${sz}px;height:${sz}px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:${Math.floor(sz*.45)}px;border:2px solid rgba(255,255,255,0.2);box-shadow:0 2px 8px rgba(0,0,0,0.6)">${emoji}</div>`,
-      iconSize: [sz, sz], iconAnchor: [sz/2, sz/2], className: ''
-    });
-
-    if (i === 0) {
-      const mk = L.marker([from.lat, from.lon], { icon: mkIcon('🏠', '#7c3aed', 34) }).addTo(leafletMap);
-      mk.bindPopup(`<strong>Start:</strong> ${from.name}`);
-      mapLayers.push(mk);
-    }
-
-    const isLast = i === opt.legs.length - 1;
-    const toMk = L.marker([to.lat, to.lon], { icon: mkIcon(isLast ? '📍' : '⬤', lineColor, isLast ? 34 : 22) }).addTo(leafletMap);
-    toMk.bindPopup(`${isLast ? '<strong>Destination:</strong> ' : ''}${to.name}`);
-    mapLayers.push(toMk);
+    const markerFrom = new mapboxgl.Marker().setLngLat(fromCoord).addTo(mapboxMap);
+    const markerTo = new mapboxgl.Marker().setLngLat(toCoord).addTo(mapboxMap);
+    mapboxMarkers.push(markerFrom, markerTo);
   });
 
-  if (allCoords.length) leafletMap.fitBounds(allCoords, { padding: [40, 40] });
+  mapboxMap.addSource('route', {
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      geometry: { type: 'LineString', coordinates: routeCoords }
+    }
+  });
+
+  mapboxMap.addLayer({
+    id: 'route',
+    type: 'line',
+    source: 'route',
+    paint: { 'line-color': '#22c55e', 'line-width': 4 }
+  });
+
+  const bounds = new mapboxgl.LngLatBounds();
+  routeCoords.forEach(c => bounds.extend(c));
+  mapboxMap.fitBounds(bounds, { padding: 50 });
 }
 
 function showMap(idx) {
   document.querySelectorAll('.mtab').forEach((t, i) => t.classList.toggle('active', i === idx));
-  if (currentOptions[idx]) renderMapRoute(currentOptions[idx]);
+  if (!currentOptions || !currentOptions[idx]) return;
+  renderMapRoute(currentOptions[idx]);
 }
-
 
 function renderHist(idx) {
   document.querySelectorAll('.htab').forEach((t, i) => t.classList.toggle('active', i === idx));
   const opt = currentOptions[idx];
   if (!opt) return;
+
+  const isLight = document.body.classList.contains('light');
 
   const canvas = document.getElementById('hist-canvas');
   const ctx = canvas.getContext('2d');
@@ -1667,10 +1854,10 @@ function renderHist(idx) {
   const barW = (W - 48) / nBins;
   const deadX = 24 + ((deadMin - minA) / range) * (W - 48);
 
-  // Deadline zones
-  ctx.fillStyle = 'rgba(34,197,94,0.06)';
+  // Zone fills
+  ctx.fillStyle = isLight ? 'rgba(22,163,74,0.08)' : 'rgba(34,197,94,0.06)';
   ctx.fillRect(24, 0, Math.min(Math.max(deadX - 24, 0), W - 48), H - 22);
-  ctx.fillStyle = 'rgba(239,68,68,0.06)';
+  ctx.fillStyle = isLight ? 'rgba(220,38,38,0.07)' : 'rgba(239,68,68,0.06)';
   ctx.fillRect(Math.max(deadX, 24), 0, W - Math.max(deadX, 24), H - 22);
 
   // Bars
@@ -1691,23 +1878,27 @@ function renderHist(idx) {
     ctx.setLineDash([4, 3]);
     ctx.beginPath(); ctx.moveTo(deadX, 0); ctx.lineTo(deadX, H - 22); ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = '#ef4444'; ctx.font = '9px JetBrains Mono,monospace';
+    ctx.fillStyle = '#ef4444';
+    ctx.font = '9px JetBrains Mono,monospace';
     ctx.fillText('Deadline', deadX + 3, 12);
   }
 
   // Mean line
   const meanX = 24 + ((opt.sim.mean - minA) / range) * (W - 48);
   if (meanX > 24 && meanX < W) {
-    ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 1;
+    const meanColor = isLight ? 'rgba(15,26,48,0.35)' : 'rgba(255,255,255,0.4)';
+    ctx.strokeStyle = meanColor; ctx.lineWidth = 1;
     ctx.setLineDash([3, 2]);
     ctx.beginPath(); ctx.moveTo(meanX, 0); ctx.lineTo(meanX, H - 22); ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.font = '9px JetBrains Mono,monospace';
+    ctx.fillStyle = isLight ? 'rgba(15,26,48,0.45)' : 'rgba(255,255,255,0.5)';
+    ctx.font = '9px JetBrains Mono,monospace';
     ctx.fillText('Mean', meanX + 2, H - 24);
   }
 
   // Axis labels
-  ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.font = '8px JetBrains Mono,monospace';
+  ctx.fillStyle = isLight ? 'rgba(15,26,48,0.35)' : 'rgba(255,255,255,0.25)';
+  ctx.font = '8px JetBrains Mono,monospace';
   ctx.fillText(fmtMin(minA), 24, H - 5);
   ctx.fillText(fmtMin(maxA), W - 36, H - 5);
 
@@ -1719,10 +1910,6 @@ function switchHist(idx) {
   document.querySelectorAll('.htab').forEach((t, i) => t.classList.toggle('active', i === idx));
   renderHist(idx);
 }
-
-// ═══════════════════════════════════════════════════════════
-//  UI HELPERS
-// ═══════════════════════════════════════════════════════════
 
 function swapCities() {
   const src = document.getElementById('src');
@@ -1778,7 +1965,7 @@ document.querySelectorAll('.pref-chip').forEach(btn => {
   if (t) t.innerHTML = html;
 })();
 
-// City pills in hero
+// City pills
 (function buildPills() {
   const el = document.getElementById('cityPills');
   if (!el) return;
@@ -1796,9 +1983,34 @@ document.querySelectorAll('.pref-chip').forEach(btn => {
   document.getElementById('dead').value = fmt(new Date(now.getTime() + 36000000));
 })();
 
-// Init route info on load
 onCityChange();
+</script>
 
+<script>
+/* ═══════════════════════════════════════════════════════════
+   THEME TOGGLE — persisted in localStorage
+═══════════════════════════════════════════════════════════ */
+const toggle = document.getElementById("themeToggle");
+
+toggle.addEventListener("change", () => {
+  const isLight = toggle.checked;
+  document.body.classList.toggle("light", isLight);
+  localStorage.setItem("theme", isLight ? "light" : "dark");
+
+  // Re-render histogram with correct colors for new theme
+  const activeHtab = document.querySelector('.htab.active');
+  if (activeHtab && currentOptions.length) {
+    const idx = Array.from(document.querySelectorAll('.htab')).indexOf(activeHtab);
+    if (idx >= 0) renderHist(idx);
+  }
+});
+
+window.addEventListener("load", () => {
+  if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light");
+    toggle.checked = true;
+  }
+});
 </script>
 </body>
-</html> 
+</html>

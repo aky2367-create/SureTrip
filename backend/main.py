@@ -28,15 +28,21 @@ from fastapi import FastAPI
 from database import Base, engine
 import models
 
-app = FastAPI()
+app = FastAPI(title="SureTrip v3 API", version="3.0.0")
 
 Base.metadata.create_all(bind=engine)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
     return {"message": "Database created"}
-
-app = FastAPI(title="SureTrip v3 API", version="3.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],   # for development

@@ -488,39 +488,66 @@ ROUTES = {
         }
     },
 }
+def get_route(src: str, dst: str):
 
-def get_route(src: str, dst: str) -> dict:
-    """Return route data for any city pair (handles reverse direction)."""
-    key = (src, dst)
-    rev = (dst, src)
-    if key in ROUTES:
-        return ROUTES[key]
-    if rev in ROUTES:
-        
-        route = ROUTES[rev]
-        reversed_route = {"distance_km": route["distance_km"]}
+    if (src, dst) in ROUTES:
+        return ROUTES[(src, dst)]
+
+    if (dst, src) in ROUTES:
+
+        original = ROUTES[(dst, src)]
+
+        reversed_route = {
+            "distance_km": original["distance_km"]
+        }
+
         for opt_key in ["fastest", "cheapest", "reliable"]:
-            opt = route[opt_key]
-            reversed_legs = []
-            for leg in reversed(opt["legs"]):
-                reversed_legs.append({
-                    "mode": leg["mode"],
-                    "from": leg["to"].replace(f"{dst}.", f"{src}.").replace(f"{src}.", f"{dst}.") if "." in leg["to"] else leg["to"],
-                    "to":   leg["from"].replace(f"{dst}.", f"{src}.").replace(f"{src}.", f"{dst}.") if "." in leg["from"] else leg["from"],
-                    "base_time": leg["base_time"],
-                    "variance": leg["variance"],
-                    "buffer": leg["buffer"],
-                    "cost": leg["cost"],
-                })
-            reversed_route[opt_key] = {
-                "name": opt["name"],
-                "icon": opt["icon"],
-                "description": opt["description"],
-                "legs": reversed_legs,
-            }
-        return reversed_route
-    raise KeyError(f"No route found for {src} ↔ {dst}")
 
+            opt = original[opt_key]
+
+            new_legs = []
+
+            for leg in reversed(opt["legs"]):
+
+                from_city, from_hub = leg["from"].split(".")
+                to_city, to_hub = leg["to"].split(".")
+
+                new_leg = {
+
+                    "mode": leg["mode"],
+
+                    "from": f"{src}.{to_hub}",
+
+                    "to": f"{dst}.{from_hub}",
+
+                    "base_time": leg["base_time"],
+
+                    "variance": leg["variance"],
+
+                    "buffer": leg["buffer"],
+
+                    "cost": leg["cost"]
+
+                }
+
+                new_legs.append(new_leg)
+
+            reversed_route[opt_key] = {
+
+                "name": opt["name"],
+
+                "icon": opt["icon"],
+
+                "description": opt["description"],
+
+                "legs": new_legs
+
+            }
+
+        return reversed_route
+    
+
+    raise KeyError(f"No route found {src} → {dst}")
 def resolve_location(loc_key: str) -> dict:
     """Resolve 'city.hub_type' to coordinates and name."""
     parts = loc_key.split(".")
