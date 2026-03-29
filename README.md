@@ -184,10 +184,4 @@ To upgrade to Google Maps:
 
 ---
 
-## 🐳 Docker
 
-```bash
-docker-compose up
-# Frontend: http://localhost:3000
-# API: http://localhost:8000
-```
