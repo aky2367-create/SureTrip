@@ -69,6 +69,19 @@ CITIES = {
             "metro_station":   {"name": "Shivajinagar Metro Station",         "lat": 18.5314, "lon": 73.8446},
         }
     },
+    "shimla": {
+        "name": "Shimla",
+        "lat": 31.1048, "lon": 77.1734,
+        "code": "SLV",
+        "emoji": "🏔",
+        "hubs": {
+            "home":            {"name": "The Mall Road",                      "lat": 31.1048, "lon": 77.1734},
+            "railway_station": {"name": "Shimla Railway Station (NMR)",       "lat": 31.1041, "lon": 77.1670},
+            "airport":         {"name": "Shimla Airport (Jubbarhatti)",       "lat": 31.0818, "lon": 77.0674},
+            "bus_terminal":    {"name": "Shimla ISBT (Tutikandi)",            "lat": 31.0913, "lon": 77.1398},
+            "metro_station":   {"name": "N/A — No Metro (Cab/Bus feeder)",   "lat": 31.1048, "lon": 77.1734},
+        }
+    },
 }
 
 
@@ -79,8 +92,8 @@ TRANSPORT_MODES = {
         "color": "#3b82f6",
         "avg_speed_kmph": 35,
         "base_cost_per_km": 2.5,
-        "variance_factor": 0.18,   
-        "fixed_variance": 7,        
+        "variance_factor": 0.18,
+        "fixed_variance": 7,
         "notes": "Signal-controlled; very consistent"
     },
     "cab": {
@@ -163,76 +176,95 @@ TRANSPORT_MODES = {
         "fixed_variance": 20,
         "notes": "Premium intercity AC bus"
     },
+    "toy_train": {
+        "name": "Toy Train (NMR)",
+        "icon": "🚞",
+        "color": "#16a34a",
+        "avg_speed_kmph": 20,
+        "base_cost_per_km": 3.5,
+        "variance_factor": 0.10,
+        "fixed_variance": 15,
+        "notes": "Narrow-gauge heritage railway Kalka–Shimla; scenic but slow"
+    },
+    "hrtc_bus": {
+        "name": "HRTC Bus",
+        "icon": "🚍",
+        "color": "#dc2626",
+        "avg_speed_kmph": 40,
+        "base_cost_per_km": 1.1,
+        "variance_factor": 0.20,
+        "fixed_variance": 30,
+        "notes": "Hill-route state bus; mountain roads, hairpin bends"
+    },
 }
 
 
-
 ROUTES = {
+
+    # ==================== DELHI ↔ OTHERS ====================
 
     ("delhi", "lucknow"): {
         "distance_km": 556,
         "fastest": {
             "name": "Fastest", "icon": "⚡",
-            "description": "Metro to IGI + Flight + Cab — 3.5-4hr total including transfers",
+            "description": "Metro to IGI + Flight + Cab — 3.5-4 hr total including transfers",
             "legs": [
-                {"mode": "metro",   "from": "delhi.home",      "to": "delhi.airport",   "base_time": 45,  "variance": 9,  "buffer": 15, "cost": 60},
-                {"mode": "flight",  "from": "delhi.airport",   "to": "lucknow.airport", "base_time": 65,  "variance": 20, "buffer": 20, "cost": 4200},
-                {"mode": "cab",     "from": "lucknow.airport", "to": "lucknow.home",    "base_time": 35,  "variance": 12, "buffer": 0,  "cost": 350},
+                {"mode": "metro",   "from": "delhi.home",      "to": "delhi.airport",      "base_time": 45,  "variance": 9,  "buffer": 15, "cost": 60},
+                {"mode": "flight",  "from": "delhi.airport",   "to": "lucknow.airport",    "base_time": 65,  "variance": 20, "buffer": 20, "cost": 4200},
+                {"mode": "cab",     "from": "lucknow.airport", "to": "lucknow.home",       "base_time": 35,  "variance": 12, "buffer": 0,  "cost": 350},
             ]
         },
         "cheapest": {
             "name": "Cheapest", "icon": "💰",
-            "description": "City bus + Intercity sleeper bus — overnight option, lowest cost",
+            "description": "City bus to ISBT + Overnight intercity bus — lowest cost option",
             "legs": [
                 {"mode": "dtc_bus",       "from": "delhi.home",          "to": "delhi.bus_terminal",    "base_time": 50,  "variance": 14, "buffer": 20, "cost": 25},
                 {"mode": "intercity_bus", "from": "delhi.bus_terminal",  "to": "lucknow.bus_terminal",  "base_time": 480, "variance": 55, "buffer": 15, "cost": 450},
-                {"mode": "auto",          "from": "lucknow.bus_terminal", "to": "lucknow.home",         "base_time": 25,  "variance": 9,  "buffer": 0,  "cost": 120},
+                {"mode": "auto",          "from": "lucknow.bus_terminal","to": "lucknow.home",          "base_time": 25,  "variance": 9,  "buffer": 0,  "cost": 120},
             ]
         },
         "reliable": {
             "name": "Most Reliable", "icon": "🛡",
             "description": "Metro + Shatabdi Express + Metro — best on-time record for this corridor",
             "legs": [
-                {"mode": "metro",         "from": "delhi.home",          "to": "delhi.railway_station", "base_time": 20,  "variance": 7,  "buffer": 30, "cost": 30},
-                {"mode": "express_train", "from": "delhi.railway_station","to": "lucknow.railway_station","base_time": 390, "variance": 25, "buffer": 25, "cost": 650},
-                {"mode": "metro",         "from": "lucknow.metro_station","to": "lucknow.home",          "base_time": 12,  "variance": 5,  "buffer": 0,  "cost": 20},
+                {"mode": "metro",         "from": "delhi.home",           "to": "delhi.railway_station",  "base_time": 20,  "variance": 7,  "buffer": 30, "cost": 30},
+                {"mode": "express_train", "from": "delhi.railway_station","to": "lucknow.railway_station", "base_time": 390, "variance": 25, "buffer": 25, "cost": 650},
+                {"mode": "metro",         "from": "lucknow.metro_station","to": "lucknow.home",            "base_time": 12,  "variance": 5,  "buffer": 0,  "cost": 20},
             ]
         }
     },
 
-    
     ("delhi", "chandigarh"): {
         "distance_km": 250,
         "fastest": {
             "name": "Fastest", "icon": "⚡",
             "description": "Volvo AC Bus via NH-44 — faster than train with less transfer overhead",
             "legs": [
-                {"mode": "cab",       "from": "delhi.home",          "to": "delhi.bus_terminal",      "base_time": 35,  "variance": 14, "buffer": 15, "cost": 280},
-                {"mode": "volvo_bus", "from": "delhi.bus_terminal",  "to": "chandigarh.bus_terminal", "base_time": 240, "variance": 28, "buffer": 10, "cost": 600},
-                {"mode": "cab",       "from": "chandigarh.bus_terminal","to": "chandigarh.home",      "base_time": 20,  "variance": 8,  "buffer": 0,  "cost": 200},
+                {"mode": "cab",       "from": "delhi.home",            "to": "delhi.bus_terminal",        "base_time": 35,  "variance": 14, "buffer": 15, "cost": 280},
+                {"mode": "volvo_bus", "from": "delhi.bus_terminal",    "to": "chandigarh.bus_terminal",   "base_time": 240, "variance": 28, "buffer": 10, "cost": 600},
+                {"mode": "cab",       "from": "chandigarh.bus_terminal","to": "chandigarh.home",          "base_time": 20,  "variance": 8,  "buffer": 0,  "cost": 200},
             ]
         },
         "cheapest": {
             "name": "Cheapest", "icon": "💰",
             "description": "City bus + Intercity bus — most affordable NH-44 corridor option",
             "legs": [
-                {"mode": "dtc_bus",       "from": "delhi.home",          "to": "delhi.bus_terminal",      "base_time": 50,  "variance": 14, "buffer": 20, "cost": 25},
-                {"mode": "intercity_bus", "from": "delhi.bus_terminal",  "to": "chandigarh.bus_terminal", "base_time": 270, "variance": 32, "buffer": 15, "cost": 320},
-                {"mode": "auto",          "from": "chandigarh.bus_terminal","to": "chandigarh.home",       "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 100},
+                {"mode": "dtc_bus",       "from": "delhi.home",            "to": "delhi.bus_terminal",        "base_time": 50,  "variance": 14, "buffer": 20, "cost": 25},
+                {"mode": "intercity_bus", "from": "delhi.bus_terminal",    "to": "chandigarh.bus_terminal",   "base_time": 270, "variance": 32, "buffer": 15, "cost": 320},
+                {"mode": "auto",          "from": "chandigarh.bus_terminal","to": "chandigarh.home",          "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 100},
             ]
         },
         "reliable": {
             "name": "Most Reliable", "icon": "🛡",
             "description": "Metro + Shatabdi Express — fixed departure, good punctuality on this route",
             "legs": [
-                {"mode": "metro",         "from": "delhi.home",          "to": "delhi.railway_station",     "base_time": 20,  "variance": 7,  "buffer": 30, "cost": 30},
-                {"mode": "express_train", "from": "delhi.railway_station","to": "chandigarh.railway_station","base_time": 210, "variance": 18, "buffer": 20, "cost": 520},
-                {"mode": "cab",           "from": "chandigarh.railway_station","to": "chandigarh.home",     "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 180},
+                {"mode": "metro",         "from": "delhi.home",           "to": "delhi.railway_station",       "base_time": 20,  "variance": 7,  "buffer": 30, "cost": 30},
+                {"mode": "express_train", "from": "delhi.railway_station","to": "chandigarh.railway_station",  "base_time": 210, "variance": 18, "buffer": 20, "cost": 520},
+                {"mode": "cab",           "from": "chandigarh.railway_station","to": "chandigarh.home",        "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 180},
             ]
         }
     },
 
-    
     ("delhi", "jaipur"): {
         "distance_km": 270,
         "fastest": {
@@ -247,28 +279,27 @@ ROUTES = {
             "name": "Cheapest", "icon": "💰",
             "description": "City bus + Rajasthan Roadways — cheapest on this short-to-medium corridor",
             "legs": [
-                {"mode": "dtc_bus",       "from": "delhi.home",         "to": "delhi.bus_terminal",   "base_time": 50,  "variance": 14, "buffer": 20, "cost": 25},
-                {"mode": "intercity_bus", "from": "delhi.bus_terminal", "to": "jaipur.bus_terminal",  "base_time": 300, "variance": 38, "buffer": 10, "cost": 280},
-                {"mode": "auto",          "from": "jaipur.bus_terminal","to": "jaipur.home",           "base_time": 20,  "variance": 8,  "buffer": 0,  "cost": 80},
+                {"mode": "dtc_bus",       "from": "delhi.home",          "to": "delhi.bus_terminal",   "base_time": 50,  "variance": 14, "buffer": 20, "cost": 25},
+                {"mode": "intercity_bus", "from": "delhi.bus_terminal",  "to": "jaipur.bus_terminal",  "base_time": 300, "variance": 38, "buffer": 10, "cost": 280},
+                {"mode": "auto",          "from": "jaipur.bus_terminal", "to": "jaipur.home",          "base_time": 20,  "variance": 8,  "buffer": 0,  "cost": 80},
             ]
         },
         "reliable": {
             "name": "Most Reliable", "icon": "🛡",
             "description": "Metro + Shatabdi/Intercity Express — structured schedule with high punctuality",
             "legs": [
-                {"mode": "metro",         "from": "delhi.home",          "to": "delhi.railway_station", "base_time": 20,  "variance": 7,  "buffer": 30, "cost": 30},
-                {"mode": "express_train", "from": "delhi.railway_station","to": "jaipur.railway_station","base_time": 270, "variance": 20, "buffer": 20, "cost": 480},
-                {"mode": "cab",           "from": "jaipur.railway_station","to": "jaipur.home",          "base_time": 12,  "variance": 6,  "buffer": 0,  "cost": 120},
+                {"mode": "metro",         "from": "delhi.home",           "to": "delhi.railway_station",  "base_time": 20,  "variance": 7,  "buffer": 30, "cost": 30},
+                {"mode": "express_train", "from": "delhi.railway_station","to": "jaipur.railway_station",  "base_time": 270, "variance": 20, "buffer": 20, "cost": 480},
+                {"mode": "cab",           "from": "jaipur.railway_station","to": "jaipur.home",            "base_time": 12,  "variance": 6,  "buffer": 0,  "cost": 120},
             ]
         }
     },
 
-    
     ("delhi", "pune"): {
         "distance_km": 1408,
         "fastest": {
             "name": "Fastest", "icon": "⚡",
-            "description": "Metro + Flight + Metro — only practical fast option for this 1400km corridor",
+            "description": "Metro + Flight + Cab — only practical fast option for this 1400 km corridor",
             "legs": [
                 {"mode": "metro",  "from": "delhi.home",    "to": "delhi.airport",  "base_time": 45,  "variance": 9,  "buffer": 15, "cost": 60},
                 {"mode": "flight", "from": "delhi.airport", "to": "pune.airport",   "base_time": 120, "variance": 25, "buffer": 25, "cost": 5500},
@@ -277,11 +308,11 @@ ROUTES = {
         },
         "cheapest": {
             "name": "Cheapest", "icon": "💰",
-            "description": "Metro + Rajdhani/Express Train — long but most economical for 1400km",
+            "description": "Metro + Mail/Express Train — long but most economical for 1400 km",
             "legs": [
-                {"mode": "metro",      "from": "delhi.home",           "to": "delhi.railway_station", "base_time": 20,  "variance": 7,  "buffer": 30, "cost": 30},
-                {"mode": "mail_train", "from": "delhi.railway_station","to": "pune.railway_station",  "base_time": 1380,"variance": 80, "buffer": 30, "cost": 1200},
-                {"mode": "metro",      "from": "pune.railway_station", "to": "pune.home",             "base_time": 20,  "variance": 10, "buffer": 0,  "cost": 30},
+                {"mode": "metro",      "from": "delhi.home",           "to": "delhi.railway_station",  "base_time": 20,   "variance": 7,  "buffer": 30, "cost": 30},
+                {"mode": "mail_train", "from": "delhi.railway_station","to": "pune.railway_station",   "base_time": 1380, "variance": 80, "buffer": 30, "cost": 1200},
+                {"mode": "metro",      "from": "pune.railway_station", "to": "pune.home",              "base_time": 20,   "variance": 10, "buffer": 0,  "cost": 30},
             ]
         },
         "reliable": {
@@ -295,40 +326,292 @@ ROUTES = {
         }
     },
 
-    
+    ("delhi", "shimla"): {
+        "distance_km": 350,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Metro + Flight to Chandigarh + Cab uphill — ~5.5 hr door-to-door",
+            "legs": [
+                {"mode": "metro",  "from": "delhi.home",          "to": "delhi.airport",          "base_time": 45,  "variance": 9,  "buffer": 20, "cost": 60},
+                {"mode": "flight", "from": "delhi.airport",       "to": "chandigarh.airport",     "base_time": 60,  "variance": 20, "buffer": 20, "cost": 3500},
+                {"mode": "cab",    "from": "chandigarh.airport",  "to": "shimla.home",            "base_time": 210, "variance": 55, "buffer": 0,  "cost": 2500},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "ISBT bus (Delhi-Shimla direct HRTC/HPRTC overnight) — cheapest option",
+            "legs": [
+                {"mode": "dtc_bus",       "from": "delhi.home",         "to": "delhi.bus_terminal",   "base_time": 50,  "variance": 14, "buffer": 20, "cost": 25},
+                {"mode": "hrtc_bus",      "from": "delhi.bus_terminal", "to": "shimla.bus_terminal",  "base_time": 540, "variance": 90, "buffer": 20, "cost": 500},
+                {"mode": "auto",          "from": "shimla.bus_terminal","to": "shimla.home",          "base_time": 15,  "variance": 7,  "buffer": 0,  "cost": 100},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Metro + Kalka Shatabdi + Toy Train — most structured timing despite long duration",
+            "legs": [
+                {"mode": "metro",         "from": "delhi.home",           "to": "delhi.railway_station",   "base_time": 30,  "variance": 10, "buffer": 30, "cost": 40},
+                {"mode": "express_train", "from": "delhi.railway_station","to": "chandigarh.railway_station","base_time": 210, "variance": 18, "buffer": 30, "cost": 520},
+                {"mode": "toy_train",     "from": "chandigarh.railway_station","to": "shimla.railway_station","base_time": 330, "variance": 35, "buffer": 0,  "cost": 500},
+            ]
+        }
+    },
+
+    # ==================== CHANDIGARH ↔ OTHERS ====================
+
+    ("chandigarh", "lucknow"): {
+        "distance_km": 600,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Cab + Flight via Delhi + Cab — no direct CHD–LKO flight; 1-stop via IGI",
+            "legs": [
+                {"mode": "cab",    "from": "chandigarh.home",    "to": "chandigarh.airport", "base_time": 28,  "variance": 10, "buffer": 20, "cost": 280},
+                {"mode": "flight", "from": "chandigarh.airport", "to": "delhi.airport",      "base_time": 55,  "variance": 18, "buffer": 60, "cost": 2800},
+                {"mode": "flight", "from": "delhi.airport",      "to": "lucknow.airport",    "base_time": 65,  "variance": 20, "buffer": 15, "cost": 3200},
+                {"mode": "cab",    "from": "lucknow.airport",    "to": "lucknow.home",       "base_time": 35,  "variance": 12, "buffer": 0,  "cost": 350},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "Auto + Overnight intercity bus (direct Chandigarh–Lucknow) — lowest cost",
+            "legs": [
+                {"mode": "auto",          "from": "chandigarh.home",         "to": "chandigarh.bus_terminal", "base_time": 20,  "variance": 7,  "buffer": 20, "cost": 100},
+                {"mode": "intercity_bus", "from": "chandigarh.bus_terminal", "to": "lucknow.bus_terminal",    "base_time": 600, "variance": 70, "buffer": 15, "cost": 650},
+                {"mode": "auto",          "from": "lucknow.bus_terminal",    "to": "lucknow.home",            "base_time": 25,  "variance": 9,  "buffer": 0,  "cost": 120},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Cab + Express Train (Chandigarh–Lucknow Express) — direct rail, structured schedule",
+            "legs": [
+                {"mode": "cab",           "from": "chandigarh.home",          "to": "chandigarh.railway_station", "base_time": 20,  "variance": 8,  "buffer": 35, "cost": 180},
+                {"mode": "express_train", "from": "chandigarh.railway_station","to": "lucknow.railway_station",    "base_time": 600, "variance": 40, "buffer": 20, "cost": 720},
+                {"mode": "auto",          "from": "lucknow.railway_station",  "to": "lucknow.home",               "base_time": 20,  "variance": 8,  "buffer": 0,  "cost": 80},
+            ]
+        }
+    },
+
+    ("chandigarh", "jaipur"): {
+        "distance_km": 540,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Volvo AC Bus via NH-48 — direct overnight/daytime, beats train+metro overhead",
+            "legs": [
+                {"mode": "cab",       "from": "chandigarh.home",        "to": "chandigarh.bus_terminal", "base_time": 22,  "variance": 8,  "buffer": 15, "cost": 200},
+                {"mode": "volvo_bus", "from": "chandigarh.bus_terminal","to": "jaipur.bus_terminal",     "base_time": 480, "variance": 50, "buffer": 10, "cost": 800},
+                {"mode": "cab",       "from": "jaipur.bus_terminal",    "to": "jaipur.home",             "base_time": 15,  "variance": 7,  "buffer": 0,  "cost": 120},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "Auto + State roadways bus (Chandigarh to Jaipur) — cheapest direct intercity option",
+            "legs": [
+                {"mode": "auto",          "from": "chandigarh.home",        "to": "chandigarh.bus_terminal", "base_time": 20,  "variance": 7,  "buffer": 20, "cost": 100},
+                {"mode": "intercity_bus", "from": "chandigarh.bus_terminal","to": "jaipur.bus_terminal",     "base_time": 510, "variance": 55, "buffer": 15, "cost": 550},
+                {"mode": "auto",          "from": "jaipur.bus_terminal",    "to": "jaipur.home",             "base_time": 15,  "variance": 7,  "buffer": 0,  "cost": 80},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Cab + Express Train (via Delhi) — train is most predictable despite longer routing",
+            "legs": [
+                {"mode": "cab",           "from": "chandigarh.home",           "to": "chandigarh.railway_station", "base_time": 20,  "variance": 8,  "buffer": 35, "cost": 180},
+                {"mode": "express_train", "from": "chandigarh.railway_station","to": "jaipur.railway_station",     "base_time": 720, "variance": 45, "buffer": 25, "cost": 860},
+                {"mode": "cab",           "from": "jaipur.railway_station",    "to": "jaipur.home",                "base_time": 12,  "variance": 6,  "buffer": 0,  "cost": 120},
+            ]
+        }
+    },
+
+    ("chandigarh", "pune"): {
+        "distance_km": 1650,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Cab + Flight (1-stop via Delhi or Mumbai) + Cab — only practical option",
+            "legs": [
+                {"mode": "cab",    "from": "chandigarh.home",    "to": "chandigarh.airport", "base_time": 28,  "variance": 10, "buffer": 20, "cost": 280},
+                {"mode": "flight", "from": "chandigarh.airport", "to": "pune.airport",       "base_time": 155, "variance": 28, "buffer": 20, "cost": 6200},
+                {"mode": "cab",    "from": "pune.airport",       "to": "pune.home",          "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "Cab + Long-distance train (via Delhi) — slow but very affordable for 1650 km",
+            "legs": [
+                {"mode": "cab",        "from": "chandigarh.home",           "to": "chandigarh.railway_station", "base_time": 20,   "variance": 8,  "buffer": 35, "cost": 180},
+                {"mode": "mail_train", "from": "chandigarh.railway_station","to": "pune.railway_station",       "base_time": 1680, "variance": 95, "buffer": 30, "cost": 1400},
+                {"mode": "metro",      "from": "pune.railway_station",      "to": "pune.home",                  "base_time": 20,   "variance": 10, "buffer": 0,  "cost": 30},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Cab + Flight + Cab — only reliable option for 1650 km; train variance is prohibitively high",
+            "legs": [
+                {"mode": "cab",    "from": "chandigarh.home",    "to": "chandigarh.airport", "base_time": 28,  "variance": 10, "buffer": 20, "cost": 280},
+                {"mode": "flight", "from": "chandigarh.airport", "to": "pune.airport",       "base_time": 155, "variance": 25, "buffer": 25, "cost": 6500},
+                {"mode": "cab",    "from": "pune.airport",       "to": "pune.home",          "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+            ]
+        }
+    },
+
+    ("chandigarh", "shimla"): {
+        "distance_km": 115,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Direct cab uphill via NH-5 — fastest door-to-door for this short route",
+            "legs": [
+                {"mode": "cab", "from": "chandigarh.home", "to": "shimla.home",
+                 "base_time": 180, "variance": 50, "buffer": 0, "cost": 2200},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "HRTC Bus (Chandigarh ISBT to Shimla ISBT) — cheapest hill route option",
+            "legs": [
+                {"mode": "auto",     "from": "chandigarh.home",        "to": "chandigarh.bus_terminal", "base_time": 18,  "variance": 7,  "buffer": 15, "cost": 100},
+                {"mode": "hrtc_bus", "from": "chandigarh.bus_terminal","to": "shimla.bus_terminal",     "base_time": 240, "variance": 60, "buffer": 10, "cost": 300},
+                {"mode": "auto",     "from": "shimla.bus_terminal",    "to": "shimla.home",             "base_time": 15,  "variance": 7,  "buffer": 0,  "cost": 100},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Cab to Kalka + Toy Train — scenic and structured; NMR rarely cancels",
+            "legs": [
+                {"mode": "cab",       "from": "chandigarh.home",          "to": "chandigarh.railway_station", "base_time": 45,  "variance": 12, "buffer": 20, "cost": 400},
+                {"mode": "toy_train", "from": "chandigarh.railway_station","to": "shimla.railway_station",     "base_time": 330, "variance": 35, "buffer": 0,  "cost": 500},
+            ]
+        }
+    },
+
+    # ==================== JAIPUR ↔ OTHERS ====================
+
+    ("jaipur", "lucknow"): {
+        "distance_km": 630,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Cab + Direct flight (Jaipur–Lucknow, limited frequency) + Cab",
+            "legs": [
+                {"mode": "cab",    "from": "jaipur.home",    "to": "jaipur.airport",  "base_time": 30,  "variance": 10, "buffer": 20, "cost": 300},
+                {"mode": "flight", "from": "jaipur.airport", "to": "lucknow.airport", "base_time": 80,  "variance": 22, "buffer": 20, "cost": 4500},
+                {"mode": "cab",    "from": "lucknow.airport","to": "lucknow.home",    "base_time": 35,  "variance": 12, "buffer": 0,  "cost": 350},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "Auto + Mail/Express train (Marudhara/Sarayu Express) — direct JAI–LKO route, good value",
+            "legs": [
+                {"mode": "auto",       "from": "jaipur.home",           "to": "jaipur.railway_station",  "base_time": 12,  "variance": 6,  "buffer": 35, "cost": 80},
+                {"mode": "mail_train", "from": "jaipur.railway_station","to": "lucknow.railway_station",  "base_time": 600, "variance": 55, "buffer": 20, "cost": 580},
+                {"mode": "auto",       "from": "lucknow.railway_station","to": "lucknow.home",            "base_time": 20,  "variance": 8,  "buffer": 0,  "cost": 80},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Auto + Express train with extra buffer — more reliable schedule than mail train",
+            "legs": [
+                {"mode": "auto",          "from": "jaipur.home",           "to": "jaipur.railway_station",  "base_time": 12,  "variance": 6,  "buffer": 35, "cost": 80},
+                {"mode": "express_train", "from": "jaipur.railway_station","to": "lucknow.railway_station",  "base_time": 560, "variance": 38, "buffer": 25, "cost": 780},
+                {"mode": "cab",           "from": "lucknow.railway_station","to": "lucknow.home",            "base_time": 20,  "variance": 8,  "buffer": 0,  "cost": 120},
+            ]
+        }
+    },
+
+    ("jaipur", "pune"): {
+        "distance_km": 1150,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Metro + Direct flight (Jaipur–Pune IndiGo) + Cab — ~4.5 hr door-to-door",
+            "legs": [
+                {"mode": "metro",  "from": "jaipur.home",    "to": "jaipur.airport",  "base_time": 28,  "variance": 7,  "buffer": 15, "cost": 35},
+                {"mode": "flight", "from": "jaipur.airport", "to": "pune.airport",    "base_time": 95,  "variance": 22, "buffer": 20, "cost": 4800},
+                {"mode": "cab",    "from": "pune.airport",   "to": "pune.home",       "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "Cab + Mail/Express train (Jaipur–Pune Express) — long but affordable",
+            "legs": [
+                {"mode": "cab",        "from": "jaipur.home",          "to": "jaipur.railway_station",  "base_time": 12,  "variance": 6,  "buffer": 35, "cost": 120},
+                {"mode": "mail_train", "from": "jaipur.railway_station","to": "pune.railway_station",    "base_time": 960, "variance": 65, "buffer": 25, "cost": 900},
+                {"mode": "metro",      "from": "pune.railway_station", "to": "pune.home",               "base_time": 20,  "variance": 10, "buffer": 0,  "cost": 30},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Metro + Flight + Cab — most reliable for 1150 km; extra airport buffer reduces risk",
+            "legs": [
+                {"mode": "metro",  "from": "jaipur.home",    "to": "jaipur.airport",  "base_time": 28,  "variance": 7,  "buffer": 20, "cost": 35},
+                {"mode": "flight", "from": "jaipur.airport", "to": "pune.airport",    "base_time": 95,  "variance": 20, "buffer": 25, "cost": 5100},
+                {"mode": "cab",    "from": "pune.airport",   "to": "pune.home",       "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+            ]
+        }
+    },
+
+    ("jaipur", "shimla"): {
+        "distance_km": 600,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Cab + Flight via Chandigarh + Cab uphill — ~6 hr door-to-door",
+            "legs": [
+                {"mode": "cab",    "from": "jaipur.home",        "to": "jaipur.airport",      "base_time": 30,  "variance": 10, "buffer": 20, "cost": 300},
+                {"mode": "flight", "from": "jaipur.airport",     "to": "chandigarh.airport",  "base_time": 90,  "variance": 25, "buffer": 20, "cost": 4500},
+                {"mode": "cab",    "from": "chandigarh.airport", "to": "shimla.home",         "base_time": 210, "variance": 55, "buffer": 0,  "cost": 2500},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "Intercity bus to Delhi + HRTC bus to Shimla — cheapest multi-leg option",
+            "legs": [
+                {"mode": "intercity_bus", "from": "jaipur.bus_terminal", "to": "delhi.bus_terminal",  "base_time": 300, "variance": 40, "buffer": 15, "cost": 350},
+                {"mode": "hrtc_bus",      "from": "delhi.bus_terminal",  "to": "shimla.bus_terminal", "base_time": 540, "variance": 90, "buffer": 15, "cost": 500},
+                {"mode": "auto",          "from": "shimla.bus_terminal", "to": "shimla.home",         "base_time": 15,  "variance": 7,  "buffer": 0,  "cost": 100},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Train via Delhi + Kalka Shatabdi + Toy Train — structured schedule, predictable legs",
+            "legs": [
+                {"mode": "cab",           "from": "jaipur.home",           "to": "jaipur.railway_station",    "base_time": 12,  "variance": 6,  "buffer": 35, "cost": 120},
+                {"mode": "express_train", "from": "jaipur.railway_station","to": "delhi.railway_station",      "base_time": 270, "variance": 20, "buffer": 30, "cost": 480},
+                {"mode": "express_train", "from": "delhi.railway_station", "to": "chandigarh.railway_station", "base_time": 210, "variance": 18, "buffer": 20, "cost": 520},
+                {"mode": "toy_train",     "from": "chandigarh.railway_station","to": "shimla.railway_station", "base_time": 330, "variance": 35, "buffer": 0,  "cost": 500},
+            ]
+        }
+    },
+
+    # ==================== LUCKNOW ↔ OTHERS ====================
+
     ("lucknow", "chandigarh"): {
         "distance_km": 600,
         "fastest": {
             "name": "Fastest", "icon": "⚡",
-            "description": "Cab + Flight via Delhi + Cab — no direct flight; 1-stop via IGI",
+            "description": "Cab + Flight via Delhi + Cab — no direct LKO–CHD flight; 1-stop via IGI",
             "legs": [
-                {"mode": "cab",    "from": "lucknow.home",   "to": "lucknow.airport",   "base_time": 40,  "variance": 14, "buffer": 20, "cost": 380},
-                {"mode": "flight", "from": "lucknow.airport","to": "delhi.airport",      "base_time": 65,  "variance": 20, "buffer": 60, "cost": 3200},
-                {"mode": "flight", "from": "delhi.airport",  "to": "chandigarh.airport", "base_time": 45,  "variance": 16, "buffer": 15, "cost": 2800},
-                {"mode": "cab",    "from": "chandigarh.airport","to": "chandigarh.home", "base_time": 25,  "variance": 9,  "buffer": 0,  "cost": 220},
+                {"mode": "cab",    "from": "lucknow.home",    "to": "lucknow.airport",    "base_time": 40,  "variance": 14, "buffer": 20, "cost": 380},
+                {"mode": "flight", "from": "lucknow.airport", "to": "delhi.airport",      "base_time": 65,  "variance": 20, "buffer": 60, "cost": 3200},
+                {"mode": "flight", "from": "delhi.airport",   "to": "chandigarh.airport", "base_time": 55,  "variance": 18, "buffer": 15, "cost": 2800},
+                {"mode": "cab",    "from": "chandigarh.airport","to": "chandigarh.home",  "base_time": 25,  "variance": 9,  "buffer": 0,  "cost": 220},
             ]
         },
         "cheapest": {
             "name": "Cheapest", "icon": "💰",
             "description": "Auto + Overnight bus (direct Lucknow–Chandigarh) — cheapest option",
             "legs": [
-                {"mode": "auto",          "from": "lucknow.home",        "to": "lucknow.bus_terminal",    "base_time": 25,  "variance": 9,  "buffer": 20, "cost": 100},
-                {"mode": "intercity_bus", "from": "lucknow.bus_terminal","to": "chandigarh.bus_terminal", "base_time": 600, "variance": 65, "buffer": 20, "cost": 700},
-                {"mode": "auto",          "from": "chandigarh.bus_terminal","to": "chandigarh.home",      "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 100},
+                {"mode": "auto",          "from": "lucknow.home",         "to": "lucknow.bus_terminal",    "base_time": 25,  "variance": 9,  "buffer": 20, "cost": 100},
+                {"mode": "intercity_bus", "from": "lucknow.bus_terminal", "to": "chandigarh.bus_terminal", "base_time": 600, "variance": 65, "buffer": 20, "cost": 700},
+                {"mode": "auto",          "from": "chandigarh.bus_terminal","to": "chandigarh.home",       "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 100},
             ]
         },
         "reliable": {
             "name": "Most Reliable", "icon": "🛡",
             "description": "Auto + Express Train (Chandigarh Express) — direct rail, structured schedule",
             "legs": [
-                {"mode": "auto",          "from": "lucknow.home",         "to": "lucknow.railway_station",    "base_time": 20,  "variance": 8,  "buffer": 35, "cost": 80},
-                {"mode": "express_train", "from": "lucknow.railway_station","to": "chandigarh.railway_station","base_time": 660, "variance": 40, "buffer": 20, "cost": 750},
-                {"mode": "cab",           "from": "chandigarh.railway_station","to": "chandigarh.home",        "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 180},
+                {"mode": "auto",          "from": "lucknow.home",          "to": "lucknow.railway_station",    "base_time": 20,  "variance": 8,  "buffer": 35, "cost": 80},
+                {"mode": "express_train", "from": "lucknow.railway_station","to": "chandigarh.railway_station", "base_time": 660, "variance": 40, "buffer": 20, "cost": 750},
+                {"mode": "cab",           "from": "chandigarh.railway_station","to": "chandigarh.home",         "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 180},
             ]
         }
     },
 
-    
     ("lucknow", "jaipur"): {
         "distance_km": 630,
         "fastest": {
@@ -360,7 +643,6 @@ ROUTES = {
         }
     },
 
-   
     ("lucknow", "pune"): {
         "distance_km": 1400,
         "fastest": {
@@ -374,16 +656,16 @@ ROUTES = {
         },
         "cheapest": {
             "name": "Cheapest", "icon": "💰",
-            "description": "Auto + Long-distance Express train — most economical for 1400km route",
+            "description": "Auto + Long-distance Express train — most economical for 1400 km route",
             "legs": [
-                {"mode": "auto",       "from": "lucknow.home",          "to": "lucknow.railway_station", "base_time": 20,  "variance": 8,  "buffer": 30, "cost": 80},
-                {"mode": "mail_train", "from": "lucknow.railway_station","to": "pune.railway_station",    "base_time": 1320,"variance": 75, "buffer": 30, "cost": 1100},
-                {"mode": "metro",      "from": "pune.railway_station",  "to": "pune.home",               "base_time": 20,  "variance": 10, "buffer": 0,  "cost": 30},
+                {"mode": "auto",       "from": "lucknow.home",          "to": "lucknow.railway_station", "base_time": 20,   "variance": 8,  "buffer": 30, "cost": 80},
+                {"mode": "mail_train", "from": "lucknow.railway_station","to": "pune.railway_station",    "base_time": 1320, "variance": 75, "buffer": 30, "cost": 1100},
+                {"mode": "metro",      "from": "pune.railway_station",  "to": "pune.home",               "base_time": 20,   "variance": 10, "buffer": 0,  "cost": 30},
             ]
         },
         "reliable": {
             "name": "Most Reliable", "icon": "🛡",
-            "description": "Cab + Flight + Cab — only practical reliable option for 1400km; generous airport buffers",
+            "description": "Cab + Flight + Cab — only practical reliable option for 1400 km; generous airport buffers",
             "legs": [
                 {"mode": "cab",    "from": "lucknow.home",    "to": "lucknow.airport", "base_time": 40,  "variance": 14, "buffer": 25, "cost": 380},
                 {"mode": "flight", "from": "lucknow.airport", "to": "pune.airport",    "base_time": 110, "variance": 22, "buffer": 25, "cost": 5500},
@@ -392,162 +674,248 @@ ROUTES = {
         }
     },
 
-    
-    ("chandigarh", "jaipur"): {
-        "distance_km": 540,
+    ("lucknow", "shimla"): {
+        "distance_km": 800,
         "fastest": {
             "name": "Fastest", "icon": "⚡",
-            "description": "Volvo AC Bus via NH-48 — direct overnight/daytime, beats train+metro overhead",
+            "description": "Cab + Flight to Chandigarh + Cab uphill — ~7 hr door-to-door",
             "legs": [
-                {"mode": "cab",       "from": "chandigarh.home",       "to": "chandigarh.bus_terminal", "base_time": 22,  "variance": 8,  "buffer": 15, "cost": 200},
-                {"mode": "volvo_bus", "from": "chandigarh.bus_terminal","to": "jaipur.bus_terminal",     "base_time": 480, "variance": 50, "buffer": 10, "cost": 800},
-                {"mode": "cab",       "from": "jaipur.bus_terminal",   "to": "jaipur.home",             "base_time": 15,  "variance": 7,  "buffer": 0,  "cost": 120},
+                {"mode": "cab",    "from": "lucknow.home",    "to": "lucknow.airport",    "base_time": 40,  "variance": 14, "buffer": 20, "cost": 380},
+                {"mode": "flight", "from": "lucknow.airport", "to": "chandigarh.airport", "base_time": 100, "variance": 25, "buffer": 20, "cost": 5000},
+                {"mode": "cab",    "from": "chandigarh.airport","to": "shimla.home",      "base_time": 210, "variance": 55, "buffer": 0,  "cost": 2500},
             ]
         },
         "cheapest": {
             "name": "Cheapest", "icon": "💰",
-            "description": "Auto + State bus (Chandigarh to Jaipur) — cheapest direct intercity option",
+            "description": "Intercity bus to Delhi + HRTC bus to Shimla — cheapest multi-leg option",
             "legs": [
-                {"mode": "auto",          "from": "chandigarh.home",       "to": "chandigarh.bus_terminal", "base_time": 20,  "variance": 7,  "buffer": 20, "cost": 100},
-                {"mode": "intercity_bus", "from": "chandigarh.bus_terminal","to": "jaipur.bus_terminal",     "base_time": 510, "variance": 55, "buffer": 15, "cost": 550},
-                {"mode": "auto",          "from": "jaipur.bus_terminal",   "to": "jaipur.home",             "base_time": 15,  "variance": 7,  "buffer": 0,  "cost": 80},
+                {"mode": "auto",          "from": "lucknow.home",         "to": "lucknow.bus_terminal",  "base_time": 25,  "variance": 9,  "buffer": 20, "cost": 100},
+                {"mode": "intercity_bus", "from": "lucknow.bus_terminal", "to": "delhi.bus_terminal",    "base_time": 480, "variance": 55, "buffer": 20, "cost": 450},
+                {"mode": "hrtc_bus",      "from": "delhi.bus_terminal",   "to": "shimla.bus_terminal",   "base_time": 540, "variance": 90, "buffer": 15, "cost": 500},
+                {"mode": "auto",          "from": "shimla.bus_terminal",  "to": "shimla.home",           "base_time": 15,  "variance": 7,  "buffer": 0,  "cost": 100},
             ]
         },
         "reliable": {
             "name": "Most Reliable", "icon": "🛡",
-            "description": "Cab + Express Train (via Delhi) — train is most predictable despite longer routing",
+            "description": "Train via Delhi + Kalka Shatabdi + Toy Train — most structured timing",
             "legs": [
-                {"mode": "cab",           "from": "chandigarh.home",          "to": "chandigarh.railway_station", "base_time": 20,  "variance": 8,  "buffer": 35, "cost": 180},
-                {"mode": "express_train", "from": "chandigarh.railway_station","to": "jaipur.railway_station",     "base_time": 720, "variance": 45, "buffer": 25, "cost": 860},
-                {"mode": "cab",           "from": "jaipur.railway_station",   "to": "jaipur.home",                "base_time": 12,  "variance": 6,  "buffer": 0,  "cost": 120},
+                {"mode": "auto",          "from": "lucknow.home",          "to": "lucknow.railway_station",    "base_time": 20,  "variance": 8,  "buffer": 35, "cost": 80},
+                {"mode": "express_train", "from": "lucknow.railway_station","to": "delhi.railway_station",      "base_time": 390, "variance": 25, "buffer": 30, "cost": 650},
+                {"mode": "express_train", "from": "delhi.railway_station",  "to": "chandigarh.railway_station", "base_time": 210, "variance": 18, "buffer": 20, "cost": 520},
+                {"mode": "toy_train",     "from": "chandigarh.railway_station","to": "shimla.railway_station",  "base_time": 330, "variance": 35, "buffer": 0,  "cost": 500},
             ]
         }
     },
 
-    
-    ("chandigarh", "pune"): {
-        "distance_km": 1650,
+    # ==================== PUNE ↔ SHIMLA ====================
+
+    ("pune", "shimla"): {
+        "distance_km": 1800,
         "fastest": {
             "name": "Fastest", "icon": "⚡",
-            "description": "Cab + Flight (1-stop via Delhi or Mumbai) + Cab — only practical option",
+            "description": "Cab + Flight to Chandigarh + Cab uphill — only practical fast option for 1800 km",
             "legs": [
-                {"mode": "cab",    "from": "chandigarh.home",    "to": "chandigarh.airport", "base_time": 28,  "variance": 10, "buffer": 20, "cost": 280},
-                {"mode": "flight", "from": "chandigarh.airport", "to": "pune.airport",       "base_time": 155, "variance": 28, "buffer": 20, "cost": 6200},
-                {"mode": "cab",    "from": "pune.airport",       "to": "pune.home",          "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+                {"mode": "cab",    "from": "pune.home",          "to": "pune.airport",          "base_time": 30,  "variance": 14, "buffer": 20, "cost": 400},
+                {"mode": "flight", "from": "pune.airport",       "to": "chandigarh.airport",    "base_time": 150, "variance": 30, "buffer": 20, "cost": 6500},
+                {"mode": "cab",    "from": "chandigarh.airport", "to": "shimla.home",           "base_time": 210, "variance": 55, "buffer": 0,  "cost": 2500},
             ]
         },
         "cheapest": {
             "name": "Cheapest", "icon": "💰",
-            "description": "Cab + Long-distance train (via Delhi) — slow but very affordable for 1650km",
+            "description": "Train to Delhi + HRTC bus to Shimla — slow but most economical for 1800 km",
             "legs": [
-                {"mode": "cab",        "from": "chandigarh.home",          "to": "chandigarh.railway_station", "base_time": 20,  "variance": 8,  "buffer": 35, "cost": 180},
-                {"mode": "mail_train", "from": "chandigarh.railway_station","to": "pune.railway_station",       "base_time": 1680,"variance": 95, "buffer": 30, "cost": 1400},
-                {"mode": "metro",      "from": "pune.railway_station",     "to": "pune.home",                  "base_time": 20,  "variance": 10, "buffer": 0,  "cost": 30},
+                {"mode": "metro",         "from": "pune.home",             "to": "pune.railway_station",      "base_time": 20,   "variance": 10, "buffer": 30, "cost": 30},
+                {"mode": "mail_train",    "from": "pune.railway_station",  "to": "delhi.railway_station",     "base_time": 1380, "variance": 85, "buffer": 30, "cost": 1200},
+                {"mode": "hrtc_bus",      "from": "delhi.bus_terminal",    "to": "shimla.bus_terminal",       "base_time": 540,  "variance": 90, "buffer": 15, "cost": 500},
+                {"mode": "auto",          "from": "shimla.bus_terminal",   "to": "shimla.home",               "base_time": 15,   "variance": 7,  "buffer": 0,  "cost": 100},
             ]
         },
         "reliable": {
             "name": "Most Reliable", "icon": "🛡",
-            "description": "Cab + Flight + Cab — only reliable option for 1650km; train variance is prohibitively high",
+            "description": "Cab + Flight to Chandigarh + Cab — flight eliminates train variance for this long haul",
             "legs": [
-                {"mode": "cab",    "from": "chandigarh.home",    "to": "chandigarh.airport", "base_time": 28,  "variance": 10, "buffer": 20, "cost": 280},
-                {"mode": "flight", "from": "chandigarh.airport", "to": "pune.airport",       "base_time": 155, "variance": 25, "buffer": 25, "cost": 6500},
-                {"mode": "cab",    "from": "pune.airport",       "to": "pune.home",          "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+                {"mode": "cab",    "from": "pune.home",          "to": "pune.airport",          "base_time": 30,  "variance": 14, "buffer": 20, "cost": 400},
+                {"mode": "flight", "from": "pune.airport",       "to": "chandigarh.airport",    "base_time": 150, "variance": 28, "buffer": 25, "cost": 6800},
+                {"mode": "cab",    "from": "chandigarh.airport", "to": "shimla.home",           "base_time": 210, "variance": 50, "buffer": 0,  "cost": 2500},
             ]
         }
     },
 
-    
-    ("jaipur", "pune"): {
-        "distance_km": 1150,
+    # ==================== SHIMLA ↔ OTHERS ====================
+
+    ("shimla", "delhi"): {
+        "distance_km": 350,
         "fastest": {
             "name": "Fastest", "icon": "⚡",
-            "description": "Metro + Direct flight (Jaipur–Pune IndiGo) + Cab — ~4.5hr door-to-door",
+            "description": "Cab to Chandigarh + Flight to Delhi — fastest descent-then-fly option",
             "legs": [
-                {"mode": "metro",  "from": "jaipur.home",    "to": "jaipur.airport",  "base_time": 28,  "variance": 7,  "buffer": 15, "cost": 35},
-                {"mode": "flight", "from": "jaipur.airport", "to": "pune.airport",    "base_time": 95,  "variance": 22, "buffer": 20, "cost": 4800},
-                {"mode": "cab",    "from": "pune.airport",   "to": "pune.home",       "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+                {"mode": "cab",    "from": "shimla.home",        "to": "chandigarh.airport",  "base_time": 210, "variance": 55, "buffer": 30, "cost": 2500},
+                {"mode": "flight", "from": "chandigarh.airport", "to": "delhi.airport",       "base_time": 60,  "variance": 20, "buffer": 20, "cost": 3500},
+                {"mode": "metro",  "from": "delhi.airport",      "to": "delhi.home",          "base_time": 45,  "variance": 9,  "buffer": 0,  "cost": 60},
             ]
         },
         "cheapest": {
             "name": "Cheapest", "icon": "💰",
-            "description": "Cab + Express train (Jaipur–Pune Express) — long but affordable",
+            "description": "HRTC Bus (Shimla ISBT to Delhi Kashmere Gate) — cheapest hill route option",
             "legs": [
-                {"mode": "cab",        "from": "jaipur.home",          "to": "jaipur.railway_station", "base_time": 12,  "variance": 6,  "buffer": 35, "cost": 120},
-                {"mode": "mail_train", "from": "jaipur.railway_station","to": "pune.railway_station",   "base_time": 960, "variance": 65, "buffer": 25, "cost": 900},
-                {"mode": "metro",      "from": "pune.railway_station", "to": "pune.home",              "base_time": 20,  "variance": 10, "buffer": 0,  "cost": 30},
+                {"mode": "auto",     "from": "shimla.home",        "to": "shimla.bus_terminal",  "base_time": 15,  "variance": 7,  "buffer": 20, "cost": 100},
+                {"mode": "hrtc_bus", "from": "shimla.bus_terminal","to": "delhi.bus_terminal",   "base_time": 540, "variance": 90, "buffer": 20, "cost": 500},
+                {"mode": "dtc_bus",  "from": "delhi.bus_terminal", "to": "delhi.home",           "base_time": 45,  "variance": 14, "buffer": 0,  "cost": 25},
             ]
         },
         "reliable": {
             "name": "Most Reliable", "icon": "🛡",
-            "description": "Metro + Flight + Cab — most reliable for 1150km; extra airport buffer reduces risk",
+            "description": "Toy Train to Kalka + Kalka Shatabdi to Delhi — most structured timing despite long duration",
             "legs": [
-                {"mode": "metro",  "from": "jaipur.home",    "to": "jaipur.airport",  "base_time": 28,  "variance": 7,  "buffer": 20, "cost": 35},
-                {"mode": "flight", "from": "jaipur.airport", "to": "pune.airport",    "base_time": 95,  "variance": 20, "buffer": 25, "cost": 5100},
-                {"mode": "cab",    "from": "pune.airport",   "to": "pune.home",       "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+                {"mode": "auto",          "from": "shimla.home",              "to": "shimla.railway_station",      "base_time": 10,  "variance": 5,  "buffer": 20, "cost": 60},
+                {"mode": "toy_train",     "from": "shimla.railway_station",   "to": "chandigarh.railway_station",  "base_time": 330, "variance": 35, "buffer": 30, "cost": 500},
+                {"mode": "express_train", "from": "chandigarh.railway_station","to": "delhi.railway_station",      "base_time": 210, "variance": 18, "buffer": 20, "cost": 520},
+                {"mode": "metro",         "from": "delhi.railway_station",    "to": "delhi.home",                  "base_time": 20,  "variance": 7,  "buffer": 0,  "cost": 30},
+            ]
+        }
+    },
+
+    ("shimla", "chandigarh"): {
+        "distance_km": 115,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Direct cab (hill descent via NH-5) — fastest door-to-door for this short route",
+            "legs": [
+                {"mode": "cab", "from": "shimla.home", "to": "chandigarh.home",
+                 "base_time": 180, "variance": 50, "buffer": 0, "cost": 2200},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "HRTC Bus (Shimla to Chandigarh ISBT) — cheapest hill route option",
+            "legs": [
+                {"mode": "auto",     "from": "shimla.home",        "to": "shimla.bus_terminal",     "base_time": 15,  "variance": 7,  "buffer": 15, "cost": 100},
+                {"mode": "hrtc_bus", "from": "shimla.bus_terminal","to": "chandigarh.bus_terminal",  "base_time": 240, "variance": 60, "buffer": 10, "cost": 300},
+                {"mode": "auto",     "from": "chandigarh.bus_terminal","to": "chandigarh.home",      "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 100},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Toy Train to Kalka + Cab to Chandigarh — NMR rarely cancels; structured schedule",
+            "legs": [
+                {"mode": "auto",      "from": "shimla.home",             "to": "shimla.railway_station",      "base_time": 10,  "variance": 5,  "buffer": 20, "cost": 60},
+                {"mode": "toy_train", "from": "shimla.railway_station",  "to": "chandigarh.railway_station",  "base_time": 330, "variance": 35, "buffer": 20, "cost": 500},
+                {"mode": "cab",       "from": "chandigarh.railway_station","to": "chandigarh.home",           "base_time": 18,  "variance": 7,  "buffer": 0,  "cost": 180},
+            ]
+        }
+    },
+
+    ("shimla", "jaipur"): {
+        "distance_km": 600,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Cab to Chandigarh + Flight to Jaipur + Cab — ~6 hr door-to-door",
+            "legs": [
+                {"mode": "cab",    "from": "shimla.home",        "to": "chandigarh.airport",  "base_time": 210, "variance": 55, "buffer": 30, "cost": 2500},
+                {"mode": "flight", "from": "chandigarh.airport", "to": "jaipur.airport",      "base_time": 90,  "variance": 25, "buffer": 20, "cost": 4500},
+                {"mode": "cab",    "from": "jaipur.airport",     "to": "jaipur.home",         "base_time": 25,  "variance": 10, "buffer": 0,  "cost": 300},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "HRTC bus to Delhi + Intercity bus to Jaipur — cheapest multi-leg option",
+            "legs": [
+                {"mode": "auto",          "from": "shimla.home",        "to": "shimla.bus_terminal",  "base_time": 15,  "variance": 7,  "buffer": 20, "cost": 100},
+                {"mode": "hrtc_bus",      "from": "shimla.bus_terminal","to": "delhi.bus_terminal",   "base_time": 540, "variance": 90, "buffer": 20, "cost": 500},
+                {"mode": "intercity_bus", "from": "delhi.bus_terminal", "to": "jaipur.bus_terminal",  "base_time": 300, "variance": 38, "buffer": 10, "cost": 280},
+                {"mode": "auto",          "from": "jaipur.bus_terminal","to": "jaipur.home",          "base_time": 20,  "variance": 8,  "buffer": 0,  "cost": 80},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Toy Train + Shatabdi to Delhi + Express to Jaipur — structured schedule, predictable legs",
+            "legs": [
+                {"mode": "auto",          "from": "shimla.home",              "to": "shimla.railway_station",      "base_time": 10,  "variance": 5,  "buffer": 20, "cost": 60},
+                {"mode": "toy_train",     "from": "shimla.railway_station",   "to": "chandigarh.railway_station",  "base_time": 330, "variance": 35, "buffer": 30, "cost": 500},
+                {"mode": "express_train", "from": "chandigarh.railway_station","to": "delhi.railway_station",      "base_time": 210, "variance": 18, "buffer": 25, "cost": 520},
+                {"mode": "express_train", "from": "delhi.railway_station",    "to": "jaipur.railway_station",      "base_time": 270, "variance": 20, "buffer": 0,  "cost": 480},
+            ]
+        }
+    }, 
+
+    ("shimla", "lucknow"): {
+        "distance_km": 800,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Cab to Chandigarh + Flight to Lucknow + Cab — ~7.5 hr door-to-door",
+            "legs": [
+                {"mode": "cab",    "from": "shimla.home",        "to": "chandigarh.airport",  "base_time": 210, "variance": 55, "buffer": 30, "cost": 2500},
+                {"mode": "flight", "from": "chandigarh.airport", "to": "lucknow.airport",     "base_time": 100, "variance": 25, "buffer": 20, "cost": 5000},
+                {"mode": "cab",    "from": "lucknow.airport",    "to": "lucknow.home",        "base_time": 35,  "variance": 12, "buffer": 0,  "cost": 350},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "HRTC bus to Delhi + Intercity bus to Lucknow — cheapest multi-leg option",
+            "legs": [
+                {"mode": "auto",          "from": "shimla.home",         "to": "shimla.bus_terminal",  "base_time": 15,  "variance": 7,  "buffer": 20, "cost": 100},
+                {"mode": "hrtc_bus",      "from": "shimla.bus_terminal", "to": "delhi.bus_terminal",   "base_time": 540, "variance": 90, "buffer": 20, "cost": 500},
+                {"mode": "intercity_bus", "from": "delhi.bus_terminal",  "to": "lucknow.bus_terminal", "base_time": 480, "variance": 55, "buffer": 15, "cost": 450},
+                {"mode": "auto",          "from": "lucknow.bus_terminal","to": "lucknow.home",         "base_time": 25,  "variance": 9,  "buffer": 0,  "cost": 120},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Toy Train + Shatabdi to Delhi + Express to Lucknow — most structured timing",
+            "legs": [
+                {"mode": "auto",          "from": "shimla.home",              "to": "shimla.railway_station",      "base_time": 10,  "variance": 5,  "buffer": 20, "cost": 60},
+                {"mode": "toy_train",     "from": "shimla.railway_station",   "to": "chandigarh.railway_station",  "base_time": 330, "variance": 35, "buffer": 30, "cost": 500},
+                {"mode": "express_train", "from": "chandigarh.railway_station","to": "delhi.railway_station",      "base_time": 210, "variance": 18, "buffer": 25, "cost": 520},
+                {"mode": "express_train", "from": "delhi.railway_station",    "to": "lucknow.railway_station",     "base_time": 390, "variance": 25, "buffer": 0,  "cost": 650},
+            ]
+        }
+    },
+
+    ("shimla", "pune"): {
+        "distance_km": 1800,
+        "fastest": {
+            "name": "Fastest", "icon": "⚡",
+            "description": "Cab to Chandigarh + Flight to Pune + Cab — only practical fast option for 1800 km",
+            "legs": [
+                {"mode": "cab",    "from": "shimla.home",        "to": "chandigarh.airport",  "base_time": 210, "variance": 55, "buffer": 30, "cost": 2500},
+                {"mode": "flight", "from": "chandigarh.airport", "to": "pune.airport",        "base_time": 150, "variance": 30, "buffer": 20, "cost": 6500},
+                {"mode": "cab",    "from": "pune.airport",       "to": "pune.home",           "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
+            ]
+        },
+        "cheapest": {
+            "name": "Cheapest", "icon": "💰",
+            "description": "HRTC bus to Delhi + Long-haul train to Pune — slow but most economical for 1800 km",
+            "legs": [
+                {"mode": "auto",       "from": "shimla.home",         "to": "shimla.bus_terminal",     "base_time": 15,   "variance": 7,  "buffer": 20, "cost": 100},
+                {"mode": "hrtc_bus",   "from": "shimla.bus_terminal", "to": "delhi.bus_terminal",      "base_time": 540,  "variance": 90, "buffer": 20, "cost": 500},
+                {"mode": "mail_train", "from": "delhi.railway_station","to": "pune.railway_station",   "base_time": 1380, "variance": 80, "buffer": 20, "cost": 1200},
+                {"mode": "metro",      "from": "pune.railway_station","to": "pune.home",               "base_time": 20,   "variance": 10, "buffer": 0,  "cost": 30},
+            ]
+        },
+        "reliable": {
+            "name": "Most Reliable", "icon": "🛡",
+            "description": "Toy Train + Shatabdi to Delhi + Flight to Pune — flight eliminates train variance for long haul",
+            "legs": [
+                {"mode": "auto",          "from": "shimla.home",              "to": "shimla.railway_station",      "base_time": 10,  "variance": 5,  "buffer": 20, "cost": 60},
+                {"mode": "toy_train",     "from": "shimla.railway_station",   "to": "chandigarh.railway_station",  "base_time": 330, "variance": 35, "buffer": 30, "cost": 500},
+                {"mode": "express_train", "from": "chandigarh.railway_station","to": "delhi.railway_station",      "base_time": 210, "variance": 18, "buffer": 25, "cost": 520},
+                {"mode": "flight",        "from": "delhi.airport",            "to": "pune.airport",                "base_time": 120, "variance": 22, "buffer": 25, "cost": 5500},
+                {"mode": "cab",           "from": "pune.airport",             "to": "pune.home",                   "base_time": 30,  "variance": 14, "buffer": 0,  "cost": 450},
             ]
         }
     },
 }
-def get_route(src: str, dst: str):
 
+
+def get_route(src: str, dst: str) -> dict:
     if (src, dst) in ROUTES:
         return ROUTES[(src, dst)]
-
     if (dst, src) in ROUTES:
-
-        original = ROUTES[(dst, src)]
-
-        reversed_route = {
-            "distance_km": original["distance_km"]
-        }
-
-        for opt_key in ["fastest", "cheapest", "reliable"]:
-
-            opt = original[opt_key]
-
-            new_legs = []
-
-            for leg in reversed(opt["legs"]):
-
-                from_city, from_hub = leg["from"].split(".")
-                to_city, to_hub = leg["to"].split(".")
-
-                new_leg = {
-
-                    "mode": leg["mode"],
-
-                    "from": f"{src}.{to_hub}",
-
-                    "to": f"{dst}.{from_hub}",
-
-                    "base_time": leg["base_time"],
-
-                    "variance": leg["variance"],
-
-                    "buffer": leg["buffer"],
-
-                    "cost": leg["cost"]
-
-                }
-
-                new_legs.append(new_leg)
-
-            reversed_route[opt_key] = {
-
-                "name": opt["name"],
-
-                "icon": opt["icon"],
-
-                "description": opt["description"],
-
-                "legs": new_legs
-
-            }
-
-        return reversed_route
-    
-
+        return ROUTES[(dst, src)]
     raise KeyError(f"No route found {src} → {dst}")
+
+
+
 def resolve_location(loc_key: str) -> dict:
     """Resolve 'city.hub_type' to coordinates and name."""
     parts = loc_key.split(".")
@@ -559,13 +927,15 @@ def resolve_location(loc_key: str) -> dict:
     hub = hubs.get(hub_type, {"name": loc_key, "lat": city.get("lat", 0), "lon": city.get("lon", 0)})
     return hub
 
+
 CITY_LIST = list(CITIES.keys())
 VALID_COMBINATIONS = [
     (CITY_LIST[i], CITY_LIST[j])
     for i in range(len(CITY_LIST))
-    for j in range(i+1, len(CITY_LIST))
+    for j in range(i + 1, len(CITY_LIST))
 ]
 print("Seed file loaded")
+
 
 def seed_database():
 
@@ -575,8 +945,6 @@ def seed_database():
 
     city_map = {}
     mode_map = {}
-
-
 
     for key, city in CITIES.items():
 
@@ -594,8 +962,6 @@ def seed_database():
 
         city_map[key] = city_obj.id
 
-      
-
         for loc_type, loc in city["hubs"].items():
 
             location = models.Location(
@@ -609,9 +975,6 @@ def seed_database():
             db.add(location)
 
     db.commit()
-
-
-  
 
     for key, mode in TRANSPORT_MODES.items():
 
@@ -632,31 +995,23 @@ def seed_database():
 
         mode_map[key] = mode_obj.id
 
-
-  
     for (src, dst), route in ROUTES.items():
 
         route_obj = models.Route(
-
             source_city_id=city_map[src],
             destination_city_id=city_map[dst],
             distance_km=route["distance_km"]
-
         )
 
         db.add(route_obj)
         db.commit()
         db.refresh(route_obj)
 
-
-        # Insert Route Options
-
         for opt_type in ["fastest", "cheapest", "reliable"]:
 
             for leg in route[opt_type]["legs"]:
 
                 option = models.RouteOption(
-
                     route_id=route_obj.id,
                     mode_id=mode_map[leg["mode"]],
                     option_type=opt_type,
@@ -664,7 +1019,6 @@ def seed_database():
                     cost=leg["cost"],
                     variance_minutes=leg["variance"],
                     recommended_buffer=leg["buffer"]
-
                 )
 
                 db.add(option)
@@ -675,5 +1029,6 @@ def seed_database():
 
     print("Database fully seeded!")
 
-    if __name__ == "__main__":
-     seed_database()
+
+if __name__ == "__main__":
+    seed_database()

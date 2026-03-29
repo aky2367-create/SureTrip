@@ -118,7 +118,7 @@ class DelayPropagationSimulator:
         else:
             tight_idx = 0
 
-        sens = self._sensitivity(legs, departure, deadline, prob_success)
+        sens = 0
 
         sample = list(arrival_times[:min(200, self.n)])
 
